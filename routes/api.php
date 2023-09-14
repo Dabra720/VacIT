@@ -1,7 +1,11 @@
 <?php
 
+use App\Http\Controllers\JobofferController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\LoginController;
+use Barryvdh\Debugbar\Facades\Debugbar;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,5 +19,18 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    // Debugbar::info($request->user());
     return $request->user();
 });
+
+Route::middleware('auth:sanctum')->get('/authenticated', function () {
+    return true;
+});
+// Route::post('register', 'RegisterController@register');
+// Route::post('login', 'LoginController@login');
+// Route::post('logout', 'LoginController@logout');
+Route::post('register', [RegisterController::class, 'register']);
+Route::post('login', [LoginController::class, 'authenticate']);
+Route::post('logout', [LoginController::class, 'logout']);
+Route::get('joboffers', [JobofferController::class, 'get_all_joboffers']);
+Route::get('get_joboffers', [JobofferController::class, 'get_joboffers']);
