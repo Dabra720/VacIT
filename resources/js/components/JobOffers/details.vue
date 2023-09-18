@@ -63,7 +63,7 @@ const getCompanyJoboffers = async (id) => {
       </div>
       <div class="col-10">
         <a href="#" style="color: orangered;">SOLLICITEER DIRECT</a>
-        <h2>MEER VACATURES VAN {{ form.company.name }}</h2>
+        <h2>MEER VACATURES VAN <span style="color: orangered;" v-if="form.company">{{ form.company.name }}</span></h2>
         <div class="row">
           <div class="col">
             <h3>DATUM</h3>

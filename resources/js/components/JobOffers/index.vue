@@ -36,9 +36,14 @@ const getCompanyJoboffers = async () => {
 }
 
 const getUser = async () => {
-    let response = await axios.get("/api/user")
-    user.value = response.data
-    return user.value
+    try {
+        let response = await axios.get("/api/user")
+        user.value = response.data
+        // return user.value
+    } catch (error) {
+        console.log('error', error)
+    }
+    
 }
 
 const onShow = (id) => {
@@ -51,7 +56,7 @@ const onShow = (id) => {
     <div class="container pt-4">
         <div class="row">
             <aside class="col-md-4 d-none d-md-block bg-light sidebar">
-
+                <!-- Image rotation of different logo's -->
             </aside>
             <main class="col-md-8 ms-sm-auto col-lg-8 px-md-4">
                 <!-- <router-link to="/joboffer/new" v-if="user && user.value.role != 3">Nieuwe vacature</router-link> -->
