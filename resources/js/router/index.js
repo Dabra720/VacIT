@@ -9,6 +9,7 @@ import jobOfferDetails from '../components/JobOffers/details.vue';
 import Login from '../components/Account/Login.vue';
 import Register from '../components/Account/Register.vue';
 import Dashboard from '../components/Account/Dashboard.vue';
+import Profile from '../components/Account/Profile.vue';
 
 const routes = [
   {
@@ -40,7 +41,7 @@ const routes = [
     {
         path: "/dashboard",
         name: "Dashboard",
-        component: Dashboard,
+        component: Profile,
         beforeEnter: (to, form, next) =>{
         axios.get('/api/authenticated').then(()=>{
             next()

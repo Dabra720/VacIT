@@ -1,5 +1,5 @@
 <script setup>
-import { inject, ref, watch } from 'vue';
+import { inject, ref, watchEffect } from 'vue';
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
@@ -8,7 +8,7 @@ const user = inject('user')
 
 const refreshKey = ref(0)
 
-watch(user, () => {
+watchEffect(user, () => {
     forceRerender()
 })
 
@@ -18,6 +18,7 @@ const forceRerender = () => {
 
 const logout = async () => {
     await axios.post('/api/logout')
+    user.value = null;
     router.push({ name: "Home"})
 }
 
@@ -44,7 +45,7 @@ const logout = async () => {
                         <!-- Authentication Links -->
                         <template v-if="user">
                             <li class="nav-item" >
-                              <a class="nav-link" @click="logout()">Log uit</a>
+                              <a class="nav-link" @click="logout">Log uit</a>
                             </li>
 
                         </template>
@@ -63,33 +64,8 @@ const logout = async () => {
         </nav>
   </header>
 </template>
-<!-- <script>
-export default {
-  data(){
-      return{
-          user: null
-      }
-  },
-  methods:{
-      logout(){
-          axios.post('/api/logout').then(()=>{
-              this.$router.push({ name: "Home"})
-          })
-      },
-      getUser(){
-        try {
-            axios.get('/api/user').then((res)=>{
-                this.user = res.data
-                console.log(this.user);
-            })
-        } catch (error) {
-            // No user / unauthorized
-            console.log('error', error)
-        }
-      }
-  },
-  mounted(){
-      this.getUser()
-  }
+<style>
+.nav-link{
+    cursor:pointer;
 }
-</script> -->
+</style>

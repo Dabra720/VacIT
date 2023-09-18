@@ -1,15 +1,16 @@
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, inject } from 'vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
 
-let user = ref(null)
+const user = inject('user')
+
+// let user = ref(null)
 let joboffers = ref([])
 
 onMounted(async () => {
-    await getUser().then(() =>{
-        
+    if(user.value != null){
         if(user.value.role == 2){
             console.log('EMPLOYER DETECTED!', user.value.role)
             getCompanyJoboffers()
@@ -17,10 +18,22 @@ onMounted(async () => {
             console.log('NO EMPLOYER HERE!', user)
             getJoboffers()
         }
-    }).catch(() => {
-        // No user, show all
+    }else{
         getJoboffers()
-    })
+    }
+    // await getUser().then(() =>{
+        
+    //     if(user.value.role == 2){
+    //         console.log('EMPLOYER DETECTED!', user.value.role)
+    //         getCompanyJoboffers()
+    //     }else{
+    //         console.log('NO EMPLOYER HERE!', user)
+    //         getJoboffers()
+    //     }
+    // }).catch(() => {
+    //     // No user, show all
+    //     getJoboffers()
+    // })
     
 })
 
@@ -35,16 +48,16 @@ const getCompanyJoboffers = async () => {
     joboffers.value = response.data.joboffers
 }
 
-const getUser = async () => {
-    try {
-        let response = await axios.get("/api/user")
-        user.value = response.data
-        // return user.value
-    } catch (error) {
-        console.log('error', error)
-    }
+// const getUser = async () => {
+//     try {
+//         let response = await axios.get("/api/user")
+//         user.value = response.data
+//         // return user.value
+//     } catch (error) {
+//         console.log('error', error)
+//     }
     
-}
+// }
 
 const onShow = (id) => {
     router.push('/joboffer/details/'+id)
