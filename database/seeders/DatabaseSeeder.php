@@ -32,17 +32,32 @@ class DatabaseSeeder extends Seeder
             'name' => 'Employer',
             'email' => 'employ@test.com',
             'password' => Hash::make('secret'),
-            'role' => 2
+            'role' => 2,
+            'company_id' => 4
         ]);
         \App\Models\User::create([
             'name' => 'User',
             'email' => 'user@test.com',
             'password' => Hash::make('secret'),
-            'role' => 3
+            'role' => 3,
+            'profile_id' => 1
         ]);
 
         \App\Models\Company::factory(5)->create();
 
         \App\Models\Joboffer::factory(10)->create();
+
+        \App\Models\UserProfile::create([
+            'user_id' => 3,
+            'name' => 'User',
+            'surname' => 'Test',
+            'date_of_birth' => fake()->date(),
+            'phone' => fake()->phoneNumber(),
+            'address' => fake()->address(),
+            'postcode' => fake()->postcode(),
+            'city' => fake()->city(),
+            'image' => 'images/profile_pic.jpg'
+        ]);
+
     }
 }
