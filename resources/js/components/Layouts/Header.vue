@@ -1,6 +1,6 @@
 <template>
   <header>
-    <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm">
             <div class="container">
                 <router-link class="navbar-brand" to="/">
                     Vac!T
@@ -27,7 +27,6 @@
                         <li class="nav-item" v-if="user">
                           <a class="nav-link" @click="logout()">Log uit</a>
                         </li>
-                       
                     </ul>
                 </div>
             </div>

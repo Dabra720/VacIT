@@ -9,6 +9,14 @@ class Joboffer extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'date',
+        'title',
+        'description',
+        'level',
+        'company_id'
+    ];
+
     public function company(){
         return $this->belongsTo(Company::class);
     }

@@ -1,11 +1,15 @@
 <script setup>
 import { onMounted, ref } from 'vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 
 let user = ref(null)
 let joboffers = ref([])
 
 onMounted(async () => {
     await getUser().then(() =>{
+        
         if(user.value.role == 2){
             console.log('EMPLOYER DETECTED!', user.value.role)
             getCompanyJoboffers()
@@ -14,21 +18,9 @@ onMounted(async () => {
             getJoboffers()
         }
     }).catch(() => {
-        console.log('NO EMPLOYER HERE Either!', user)
+        // No user, show all
         getJoboffers()
-    }
-    )
-    // if(getUser()){
-    //     if(user.value.role == 2){
-    //         console.log('EMPLOYER DETECTED!', user)
-    //         getCompanyJoboffers()
-    //     }else{
-    //         console.log('NO EMPLOYER HERE!', user)
-    //         getJoboffers()
-    //     }
-    // }else{
-    //     getJoboffers()
-    // }
+    })
     
 })
 
@@ -49,32 +41,39 @@ const getUser = async () => {
     return user.value
 }
 
+const onShow = (id) => {
+    router.push('/joboffer/details/'+id)
+}
+
 
 </script>
 <template>
-    <div class="container">
+    <div class="container pt-4">
         <div class="row">
-            <h1>vacatures index</h1>
-            <router-link to="/joboffer/new">Nieuwe vacature</router-link>
-        </div>
-        <div class="row" v-for="joboffer in joboffers">
-            <div class="row">
-                <div class="col">
-                    <p>{{ joboffer.company_id }}</p>
+            <aside class="col-md-4 d-none d-md-block bg-light sidebar">
+
+            </aside>
+            <main class="col-md-8 ms-sm-auto col-lg-8 px-md-4">
+                <!-- <router-link to="/joboffer/new" v-if="user && user.value.role != 3">Nieuwe vacature</router-link> -->
+                
+                <div class="card mb-1" v-for="joboffer in joboffers" :key="joboffer.id">
+                    <div class="row no-gutters">
+                        <div class="col-md-2">
+                            <!-- <img src="" class="card-img"/> -->
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title">{{joboffer.date}}</h5>
+                                <h3 class="card-title">{{ joboffer.title }} voor {{ joboffer.company.name }}</h3>
+                                <p class="card-text">{{ joboffer.description }}</p>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <router-link to="#" @click="onShow(joboffer.id)" class="btn btn-secondary" >GO</router-link>
+                        </div>
+                    </div>
                 </div>
-                <div class="col">
-                    <p>{{joboffer.title}}</p>
-                </div>
-                <div class="col">
-                    <p>{{joboffer.company.city}}</p>
-                </div>
-                <div class="col">
-                    <p>{{joboffer.date}}</p>
-                </div>
-            </div>
-            <div class="row">
-                <p>{{joboffer.description}}</p>
-            </div>
+            </main>
         </div>
     </div>
     <br/>

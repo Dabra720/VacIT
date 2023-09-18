@@ -34,3 +34,5 @@ Route::post('login', [LoginController::class, 'authenticate']);
 Route::post('logout', [LoginController::class, 'logout']);
 Route::get('joboffers', [JobofferController::class, 'get_all_joboffers']);
 Route::get('get_joboffers', [JobofferController::class, 'get_joboffers']);
+Route::get('show_joboffer/{id}', [JobofferController::class, 'show_joboffer']);
+Route::get('company_joboffers/{id}', [JobofferController::class, 'get_company_joboffers']);

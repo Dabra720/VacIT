@@ -1,3 +1,11 @@
+<script setup>
+
+</script>
 <template>
-  <h1>Create a new JobOffer!</h1>
+  <div class="container">
+    <h1>Create a new Joboffer!</h1>
+    <div class="row">
+      
+    </div>
+  </div>
 </template>

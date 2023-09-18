@@ -1,8 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
 import notFound from '../components/NotFound.vue';
+
 import jobOfferIndex from '../components/JobOffers/index.vue';
 import jobOfferNew from '../components/JobOffers/new.vue';
+import jobOfferDetails from '../components/JobOffers/details.vue';
+
 import Login from '../components/Account/Login.vue';
 import Register from '../components/Account/Register.vue';
 import Dashboard from '../components/Account/Dashboard.vue';
@@ -17,6 +20,12 @@ const routes = [
     path: '/jobOffer/new',
     name: 'newJobOffer',
     component: jobOfferNew,
+  },
+  {
+    path: '/jobOffer/details/:id',
+    name: 'jobOfferDetails',
+    component: jobOfferDetails,
+    props: true
   },
   {
         path: '/register',

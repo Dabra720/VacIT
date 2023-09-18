@@ -26,4 +26,15 @@ class JobofferController extends Controller
             'joboffers' => $joboffers
         ], 200);
     }
+
+    public function create(Request $request){
+
+    }
+
+    public function show_joboffer($id){
+        $joboffer = JobOffer::with('company')->find($id);
+        return response()->json([
+            'joboffer' => $joboffer
+        ]);
+    }
 }

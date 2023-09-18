@@ -17,15 +17,15 @@ class JobofferFactory extends Factory
     public function definition(): array
     {
         // enum Level{
-        //     case A = 'Junior';
-        //     case B = 'Medior';
-        //     case C = 'Senior';
+        //     case Junior;
+        //     case Medior;
+        //     case Senior;
         // }
 
         return [
             'date' => $this->faker->date(),
             'title' => $this->faker->jobTitle(),
-            'description' => $this->faker->text(),
+            'description' => $this->faker->paragraph(2),
             'level' => $this->faker->randomElement(['Junior', 'Medior', 'Senior']),
             'company_id' =>$this->faker->numberBetween(1, 5)
         ];
