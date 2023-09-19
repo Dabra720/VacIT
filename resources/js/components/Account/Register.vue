@@ -1,26 +1,27 @@
 <template>
-  <div class="">
-    <div class="">
+  <div class="container">
+    <div class="row">
         <div class=""><h1>Register an account</h1></div>
-        <div class="">
-            <label class="" for="name">Name</label>
+        <div class="form-group">
+            <label class="mt-2" for="name">Name</label>
             <span class="" v-if="errors.name">{{errors.name[0]}}</span>
-            <input class="" placeholder="Name" type="text" v-model="form.name" >
+            <input class="form-control" placeholder="Name" type="text" v-model="form.name" >
+        </div>
+        <div class="form-group">
+            <label class="mt-2" for="email">Your e-mail</label>
+            <span class="" v-if="errors.email">{{errors.email[0]}}</span>
+            <input class="form-control" placeholder="E-mail" type="text" v-model="form.email" >
+        </div>
+        <div class="form-group">
+            <label class="mt-2" for="password">Password</label>
+            <input class="form-control" placeholder="Password" type="password" v-model="form.password" name="password">
+        </div>
+        <div class="form-group">
+            <label class="mt-2" for="confirm_password">Confirm Password</label>
+            <input class="form-control" placeholder="Confirm Password" type="password" v-model="form.password_confirmation" name="password_confirmation">
         </div>
         <div class="">
-            <label for="email">Your e-mail</label>
-            <input class="" placeholder="E-mail" type="text" v-model="form.email" >
-        </div>
-        <div class="">
-            <label for="password">Password</label>
-            <input class="" placeholder="Password" type="password" v-model="form.password" name="password">
-        </div>
-        <div class="">
-            <label for="confirm_password">Confirm Password</label>
-            <input class="" placeholder="Confirm Password" type="password" v-model="form.password_confirmation" name="password_confirmation">
-        </div>
-        <div class="">
-            <button @click.prevent="saveForm" type="submit" class="">Register</button>
+            <button @click.prevent="saveForm" type="submit" class="btn btn-primary my-2">Register</button>
         </div>
     </div> 
 </div>

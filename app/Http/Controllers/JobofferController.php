@@ -20,7 +20,7 @@ class JobofferController extends Controller
     public function get_joboffers(Request $request){
         $company_id = $request->get('id');
         DebugBar::addMessage('getting joboffers for employer..');
-        Debugbar::info($company_id);
+        // Debugbar::info($company_id);
         $joboffers = Joboffer::with('company')->where('company_id', 'LIKE', $company_id)->get();
         return response()->json([
             'joboffers' => $joboffers

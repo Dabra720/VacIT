@@ -9,7 +9,8 @@ import jobOfferDetails from '../components/JobOffers/details.vue';
 import Login from '../components/Account/Login.vue';
 import Register from '../components/Account/Register.vue';
 import Dashboard from '../components/Account/Dashboard.vue';
-import Profile from '../components/Account/Profile.vue';
+import UpdateProfile from '../components/Profile/Update.vue';
+import MyApplications from '../components/Account/MyApplications.vue';
 
 const routes = [
   {
@@ -29,27 +30,44 @@ const routes = [
     props: true
   },
   {
-        path: '/register',
-        component: Register,
-        name: 'Register'
+      path: '/register',
+      component: Register,
+      name: 'Register'
   },
   {
-        path: '/login',
-        component: Login,
-        name: 'Login'
-    },
-    {
-        path: "/dashboard",
-        name: "Dashboard",
-        component: Profile,
-        beforeEnter: (to, form, next) =>{
-        axios.get('/api/authenticated').then(()=>{
-            next()
-        }).catch(()=>{
-            return next({ name: 'Login'})
-        })
+      path: '/login',
+      component: Login,
+      name: 'Login'
+  },
+  {
+      path: "/dashboard",
+      name: "Dashboard",
+      component: Dashboard,
+      beforeEnter: (to, form, next) =>{
+      axios.get('/api/authenticated').then(()=>{
+          next()
+      }).catch(()=>{
+          return next({ name: 'Login'})
+      })
     }
-    },
+  },
+  {
+    path: "/updateprofile",
+    name: "UpdateProfile",
+    component: UpdateProfile,
+    beforeEnter: (to, form, next) =>{
+    axios.get('/api/authenticated').then(()=>{
+        next()
+    }).catch(()=>{
+        return next({ name: 'Login'})
+    })
+  }
+},
+  {
+    path: '/applications',
+    name: 'Applications',
+    component: MyApplications,
+  },
   {
     path: '/:pathMatch(.*)*',
     component: notFound

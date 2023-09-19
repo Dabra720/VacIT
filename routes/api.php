@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\JobofferController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -34,7 +35,8 @@ Route::post('register', [RegisterController::class, 'register']);
 Route::post('login', [LoginController::class, 'authenticate']);
 Route::post('logout', [LoginController::class, 'logout']);
 
-Route::get('profile', [UserProfileController::class, 'show_profile']);
+Route::get('profile/user', [UserProfileController::class, 'show_profile']);
+Route::get('profile/company', [CompanyController::class, 'show_company']);
 
 // Joboffer routes
 Route::get('joboffers', [JobofferController::class, 'get_all_joboffers']);

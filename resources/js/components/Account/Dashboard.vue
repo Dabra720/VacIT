@@ -1,60 +1,49 @@
-<template>
-  <div>
-      Dashboard <br>
-      <div v-if="user">
-      Name: {{user.name}} <br>
-      Email: {{user.email}}<br><br>
-      <button @click.prevent="logout">Logout</button>
-      </div>
+<script setup>
+import { ref, inject, onMounted } from 'vue'
+import CompanyProfile from '../Profile/Company.vue'
+import UserProfile from '../Profile/User.vue'
+import UpdateProfile from '../Profile/Update.vue'
 
+const user = inject('user')
+// const profile = ref('')
+let profile = ref(null)
+// let company = ref(null)
+
+onMounted(async () => {
+  console.log(user.value.id)
+  if(user.value){
+    if(user.value.role == 2){
+        // profile.value = 'employer'
+        await getCompany(user.value.company_id)
+    }
+    if(user.value.role == 3){
+        // profile.value = 'user'
+        await getProfile(user.value.id)
+    }
+  }
+})
+
+const getProfile = async (id) => {
+  let response = await axios.get(`api/profile/user?id=${id}`)
+  console.log('profile', response.data)
+  profile.value = response.data.profile
+}
+
+const getCompany = async (id) => {
+    console.log(`id: ${id}`)
+  let response = await axios.get(`api/profile/company?id=${id}`)
+  console.log('company', response.data)
+  profile.value = response.data.company
+}
+
+</script>
+<template>
+  <div class="container" v-if="profile">
+    <UserProfile v-if="user.role == 3" :profile="profile" :user="user"/>
+    <CompanyProfile v-if="user.role == 2" :profile="profile"/>
+  </div>
+  <div class="container" v-else>
+    <UpdateProfile />
   </div>
 </template>
-<script>
-export default {
-  data(){
-      return{
-          user: null
-      }
-  },
-  methods:{
-      logout(){
-          axios.post('/api/logout').then(()=>{
-              this.$router.push({ name: "Home"})
-          })
-      }
-  },
-  mounted(){
-      axios.get('/api/user').then((res)=>{
-          this.user = res.data
-          console.log(this.user);
-      })
-  }
-}
-</script>
-<!-- <template>
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="card shadow-sm">
-                    <div class="card-header">
-                        <h3>Dashboard</h3>
-                    </div>
-                    <div class="card-body">
-                        <p class="mb-0">You are logged in as <b>{{user.email}}</b></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</template>
 
-<script>
-export default {
-    name:"dashboard",
-    data(){
-        return {
-            user:this.$store.state.auth.user
-        }
-    }
-}
-</script> -->

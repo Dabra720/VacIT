@@ -31,15 +31,15 @@ const loginUser = async () => {
      <div class="row">
          <div class=""><h1>Login to your account</h1></div>
          <div class="form-group">
-             <label for="email">Your e-mail</label>
+             <label for="email" class="mt-2">Your e-mail</label>
              <input class="form-control" id="email" placeholder="Email" type="email" v-model="form.email">
          </div>
          <div class="form-group">
-             <label for="password">Password</label>
+             <label for="password" class="mt-2">Password</label>
              <input class="form-control" id="password" placeholder="Password" type="password" v-model="form.password" name="password">
          </div>
          <div class="">
-             <button @click.prevent="loginUser" type="submit" class="btn btn-primary">Login</button>
+             <button @click.prevent="loginUser" type="submit" class="btn btn-primary my-2">Login</button>
          </div>
      </div> 
  </div>
