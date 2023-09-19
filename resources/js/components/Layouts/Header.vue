@@ -44,6 +44,9 @@ const logout = async () => {
                     <ul class="navbar-nav ms-auto">
                         <!-- Authentication Links -->
                         <template v-if="user">
+                            <li class="nav-item">
+                                <router-link to="/dashboard" class="nav-link">Mijn profiel</router-link>
+                            </li>
                             <li class="nav-item" >
                               <a class="nav-link" @click="logout">Log uit</a>
                             </li>

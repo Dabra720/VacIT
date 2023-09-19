@@ -11,7 +11,7 @@ class UserProfileController extends Controller
 {
     public function show_profile(Request $request){
         $user_id = $request->get('id');
-        $profile = UserProfile::where('user_id','LIKE', $user_id)->get();
+        $profile = UserProfile::where('user_id','LIKE', $user_id)->first();
         // $debugbar = new DebugBar();
         // $debugbar->info($profile);
         // $debugbar->sendDataInHeaders();
