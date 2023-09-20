@@ -11,6 +11,7 @@ class UserProfile extends Model
     use HasFactory;
 
     protected $fillable = [
+        'user_id',
         'name',
         'surname',
         'date_of_birth',

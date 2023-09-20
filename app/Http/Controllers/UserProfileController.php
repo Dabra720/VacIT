@@ -25,6 +25,7 @@ class UserProfileController extends Controller
     {
 
         $request->validate([
+            'user_id' => ['required'],
             'name' => ['required'],
             'surname' => ['required'],
             'date_of_birth' =>['required'],
@@ -34,7 +35,7 @@ class UserProfileController extends Controller
             'city' =>['required'],
         ]);
 
-        UserProfile::createOrUpdate(
+        UserProfile::updateOrCreate(
             ['user_id' => $request->user_id],
             [
             'name' => $request->name,

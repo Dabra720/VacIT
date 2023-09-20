@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserProfileController;
-use App\Models\UserProfile;
 use Barryvdh\Debugbar\Facades\Debugbar;
 
 /*
@@ -35,8 +34,10 @@ Route::post('register', [RegisterController::class, 'register']);
 Route::post('login', [LoginController::class, 'authenticate']);
 Route::post('logout', [LoginController::class, 'logout']);
 
+// Profile routes
 Route::get('profile/user', [UserProfileController::class, 'show_profile']);
 Route::get('profile/company', [CompanyController::class, 'show_company']);
+Route::post('profile/save', [UserProfileController::class, 'update_or_create']);
 
 // Joboffer routes
 Route::get('joboffers', [JobofferController::class, 'get_all_joboffers']);
