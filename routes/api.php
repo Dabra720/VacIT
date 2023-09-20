@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserProfileController;
+use App\Models\Joboffer;
 use Barryvdh\Debugbar\Facades\Debugbar;
 
 /*
@@ -39,8 +40,13 @@ Route::get('profile/user', [UserProfileController::class, 'show_profile']);
 Route::get('profile/company', [CompanyController::class, 'show_company']);
 Route::post('profile/save', [UserProfileController::class, 'update_or_create']);
 
+Route::get('my_joboffers', [JobofferController::class, 'get_my_joboffers']);
 // Joboffer routes
 Route::get('joboffers', [JobofferController::class, 'get_all_joboffers']);
 Route::get('get_joboffers', [JobofferController::class, 'get_joboffers']);
 Route::get('show_joboffer/{id}', [JobofferController::class, 'show_joboffer']);
 Route::get('company_joboffers/{id}', [JobofferController::class, 'get_company_joboffers']);
+
+Route::post('joboffer/apply', [JobofferController::class, 'add_joboffer_user']);
+Route::post('joboffer/accept', [JobofferController::class, 'toggle_invite']);
+Route::get('joboffer/get_candidates', [JobofferController::class, 'get_all_candidates']);

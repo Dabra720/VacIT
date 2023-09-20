@@ -3,8 +3,8 @@ import { createRouter, createWebHistory } from 'vue-router';
 import notFound from '../components/NotFound.vue';
 
 import jobOfferIndex from '../components/JobOffers/index.vue';
-import jobOfferNew from '../components/JobOffers/new.vue';
-import jobOfferDetails from '../components/JobOffers/details.vue';
+import jobOfferNew from '../components/JobOffers/New.vue';
+import jobOfferDetails from '../components/JobOffers/Details.vue';
 
 import Login from '../components/Account/Login.vue';
 import Register from '../components/Account/Register.vue';

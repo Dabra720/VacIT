@@ -1,15 +1,13 @@
 <script setup>
-import { onMounted, ref } from 'vue'
+import RelatedJoboffers from './RelatedJoboffers.vue';
+import RelatedUsers from './RelatedUsers.vue';
+import { onMounted, ref, inject } from 'vue'
 
-let form = ref({ id: ''})
-let company_joboffers = ref([]);
+const user = inject('user')
 
-const props = defineProps({
-  id:{
-    type: String,
-    default: ''
-  }
-})
+const form = ref(null)
+
+const props = defineProps(['id'])
 
 onMounted(async () => {
   getJoboffer()
@@ -18,17 +16,12 @@ onMounted(async () => {
 
 const getJoboffer = async () => {
   let response = await axios.get(`/api/show_joboffer/${props.id}`)
-  console.log('joboffer', response.data)
+  // console.log('joboffer', response.data)
   form.value = response.data.joboffer
-  getCompanyJoboffers(response.data.joboffer.company_id)
+  // getCompanyJoboffers(response.data.joboffer.company_id)
 }
 
-const getCompanyJoboffers = async (id) => {
-  let response = await axios.get("/api/get_joboffers?id="+id)
-  // let response = await axios.get(`/api/company_joboffers/${id}`)
-  // console.log('company joboffers', response.data.joboffers)
-  company_joboffers.value = response.data.joboffers
-}
+
 
 </script>
 <template>
@@ -57,35 +50,18 @@ const getCompanyJoboffers = async (id) => {
       </main>
     </div>
 
-    <div class="row">
+    <div class="row" v-if="user">
       <div class="col-md-2">
         
       </div>
-      <div class="col-10">
+      <div class="col-10" v-if="user.role == 3">
         <a href="#" style="color: orangered;">SOLLICITEER DIRECT</a>
-        <h2>MEER VACATURES VAN <span style="color: orangered;" v-if="form.company">{{ form.company.name }}</span></h2>
-        <div class="row">
-          <div class="col">
-            <h3>DATUM</h3>
-          </div>
-          <div class="col">
-            <h3>VACATURE</h3>
-          </div>
-          <div class="col">
-            <h3>NIVEAU</h3>
-          </div>
-        </div>
-        <div class="row" v-for="offer in company_joboffers" :key="offer.id">
-          <div class="col">
-            {{ offer.date }}
-          </div>
-          <div class="col">
-            {{ offer.title }}
-          </div>
-          <div class="col">
-            {{ offer.level }}
-          </div>
-        </div>
+        <!-- If Candidate: Related Joboffers -->
+        <RelatedJoboffers v-if="form.company" :company="form.company"/>
+      </div>
+      <div class="col-10" v-if="user.role == 2">
+        <!-- If Employer: Related Users -->
+        <RelatedUsers v-if="form" :joboffer="form"/>
       </div>
     </div>
 

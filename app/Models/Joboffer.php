@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Joboffer extends Model
 {
@@ -22,8 +22,14 @@ class Joboffer extends Model
         return $this->belongsTo(Company::class);
     }
 
-    public function users() : HasMany
+    public function users() : BelongsToMany
     {
-        return $this->hasMany(User::class, 'user_joboffer');
+        return $this->belongsToMany(User::class, 'joboffer_user', 'joboffer_id', 'user_id')->withTimestamps();
+    }
+
+    public function invited() : BelongsToMany
+    {
+        return $this->belongsToMany(User::class)
+                ->wherePivot('invited', 1);
     }
 }
