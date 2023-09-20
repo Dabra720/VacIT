@@ -1,5 +1,6 @@
 <script setup>
 import { onMounted, ref } from 'vue'
+import moment from 'moment'
 
 const props = defineProps(['joboffer'])
 
@@ -12,6 +13,13 @@ onMounted(async () => {
     getRelatedUsers(props.joboffer.id)
 
   }
+
+  const format_date = (value) => {
+    if (value) {
+      return moment(String(value)).format('DD-MM-YYYY')
+    }
+  }
+
 })
 
 const getRelatedUsers = async (id) => {
@@ -27,25 +35,27 @@ const getRelatedUsers = async (id) => {
   <h2>ALLE SOLLICITANTEN</h2>
 
   <div class="row">
-    <div class="col">
+    <div class="col-3">
       <h3>DATUM</h3>
     </div>
-    <div class="col">
+    <div class="col-6">
       <h3>NAAM</h3>
     </div>
-    <div class="col">
+    <div class="col-3">
       <h3>INTERESSE</h3>
     </div>
   </div>
-  <div class="row" v-for="user in users" :key="user.id">
-    <div class="col">
-      {{ user.pivot.created_at }}
+  <div class="row border" v-for="user in users" :key="user.id">
+    <div class="col-3 p-2 borange">
+      <span class="borange">{{ format_date(user.pivot.created_at) }}</span>
     </div>
-    <div class="col">
+    <div class="col-6">
       {{ user.name }}
     </div>
-    <div class="col">
+    <div class="col-3">
       <input type="checkbox">
     </div>
   </div>
 </template>
+<style>
+</style>

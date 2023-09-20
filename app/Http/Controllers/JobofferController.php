@@ -7,6 +7,7 @@ use App\Models\Joboffer;
 use App\Models\User;
 use Barryvdh\Debugbar\Facades\Debugbar;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class JobofferController extends Controller
 {
@@ -40,9 +41,12 @@ class JobofferController extends Controller
     }
 
     public function add_joboffer_user(Request $request){
+        $user = Auth::user();
+        Debugbar::info($user->id);
         $joboffer = Joboffer::find($request->joboffer_id);
 
-        $joboffer->users()->sync($request->user_id);
+        $joboffer->users()->sync($user->id);
+        return response('Success');
     }
 
     public function get_all_candidates(Request $request){

@@ -68,7 +68,7 @@ class User extends Authenticatable
 
     public function joboffers() : BelongsToMany
     {
-        return $this->belongsToMany(Joboffer::class, 'joboffer_user');
+        return $this->belongsToMany(Joboffer::class, 'joboffer_user')->withPivot('invited');
     }
 
 }

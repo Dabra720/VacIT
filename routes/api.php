@@ -23,6 +23,7 @@ use Barryvdh\Debugbar\Facades\Debugbar;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     Debugbar::info($request->user());
+    Debugbar::addMessage('Got the user');
     return $request->user();
 });
 

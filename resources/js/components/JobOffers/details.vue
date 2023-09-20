@@ -10,6 +10,7 @@ const form = ref(null)
 const props = defineProps(['id'])
 
 onMounted(async () => {
+  console.log('user', user.value)
   getJoboffer()
   
 })
@@ -21,12 +22,23 @@ const getJoboffer = async () => {
   // getCompanyJoboffers(response.data.joboffer.company_id)
 }
 
-
+const apply = () => {
+  let body = {
+    user_id: user.value.id,
+    joboffer_id: form.value.id
+  }
+  console.log('body', body);
+  axios.post('/api/joboffer/apply', body).then((res)=> {
+    console.log('apply: ', res)
+  }).catch((err)=>{
+    console.log('error', err)
+  })
+}
 
 </script>
 <template>
-  <div class="container">
-    <div class="row">
+  <div class="container" v-if="form">
+    <div class="row py-4">
       <aside class="col-md-2">
         <!-- Hier komt een image van het bedrijf -->
       </aside>
@@ -50,12 +62,12 @@ const getJoboffer = async () => {
       </main>
     </div>
 
-    <div class="row" v-if="user">
+    <div class="row pb-4" v-if="user">
       <div class="col-md-2">
         
       </div>
       <div class="col-10" v-if="user.role == 3">
-        <a href="#" style="color: orangered;">SOLLICITEER DIRECT</a>
+        <a @click="apply" class="apply">SOLLICITEER DIRECT</a>
         <!-- If Candidate: Related Joboffers -->
         <RelatedJoboffers v-if="form.company" :company="form.company"/>
       </div>
@@ -68,3 +80,9 @@ const getJoboffer = async () => {
     
   </div>
 </template>
+<style>
+.apply{
+  color: orangeRed;
+  font-size: xx-large;
+}
+</style>
