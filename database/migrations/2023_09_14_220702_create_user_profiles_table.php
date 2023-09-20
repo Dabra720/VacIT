@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('address');
             $table->string('postcode');
             $table->string('city');
-            $table->string('image');
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }

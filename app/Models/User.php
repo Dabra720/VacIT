@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -13,21 +14,9 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    /**
-     * Get the Company associated with the user.
-     */
-    public function company(): HasOne
-    {
-        return $this->hasOne(Company::class);
-    }
+    
 
-    /**
-     * Get the UserProfile associated with the user.
-     */
-    // public function userprofile(): HasOne
-    // {
-    //     return $this->hasOne(UserProfile::class);
-    // }
+    
 
     /**
      * The attributes that are mass assignable.
@@ -59,4 +48,26 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    /**
+     * Get the Company associated with the user.
+     */
+    public function company(): HasOne
+    {
+        return $this->hasOne(Company::class);
+    }
+
+    /**
+     * Get the UserProfile associated with the user.
+     */
+    // public function userprofile(): HasOne
+    // {
+    //     return $this->hasOne(UserProfile::class);
+    // }
+
+    public function joboffers() : HasMany
+    {
+        return $this->hasMany(Joboffer::class, 'user_joboffer');
+    }
+
 }

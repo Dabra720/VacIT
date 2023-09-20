@@ -25,7 +25,7 @@ class JobofferFactory extends Factory
         return [
             'date' => $this->faker->date(),
             'title' => $this->faker->jobTitle(),
-            'description' => $this->faker->paragraph(2),
+            'description' => $this->faker->paragraphs(2, true),
             'level' => $this->faker->randomElement(['Junior', 'Medior', 'Senior']),
             'company_id' =>$this->faker->numberBetween(1, 5)
         ];
