@@ -4,17 +4,18 @@
         <div class=""><h1>Register an account</h1></div>
         <div class="form-group">
             <label class="mt-2" for="name">Name</label>
-            <span class="" v-if="errors.name">{{errors.name[0]}}</span>
             <input class="form-control" placeholder="Name" type="text" v-model="form.name" >
+            <div class="text-danger" v-if="errors.name">{{ errors.name[0] }}</div>
         </div>
         <div class="form-group">
             <label class="mt-2" for="email">Your e-mail</label>
-            <span class="" v-if="errors.email">{{errors.email[0]}}</span>
             <input class="form-control" placeholder="E-mail" type="text" v-model="form.email" >
+            <div class="text-danger" v-if="errors.email">{{ errors.email[0] }}</div>
         </div>
         <div class="form-group">
             <label class="mt-2" for="password">Password</label>
             <input class="form-control" placeholder="Password" type="password" v-model="form.password" name="password">
+            <div class="text-danger" v-if="errors.password">{{ errors.password[0] }}</div>
         </div>
         <div class="form-group">
             <label class="mt-2" for="confirm_password">Confirm Password</label>

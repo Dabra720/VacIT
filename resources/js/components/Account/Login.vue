@@ -20,29 +20,34 @@ const loginUser = async () => {
         user.value = res.data
         router.push({ name: "Dashboard"}); 
     }).catch((error) =>{
-        errors = error.response.data.errors;
+        errors.value = error.response.data.errors;
     })
 }
 
 </script>
 
 <template>
-  <div class="container">
-     <div class="row">
-         <div class=""><h1>Login to your account</h1></div>
-         <div class="form-group">
-             <label for="email" class="mt-2">Your e-mail</label>
-             <input class="form-control" id="email" placeholder="Email" type="email" v-model="form.email">
-         </div>
-         <div class="form-group">
-             <label for="password" class="mt-2">Password</label>
-             <input class="form-control" id="password" placeholder="Password" type="password" v-model="form.password" name="password">
-         </div>
-         <div class="">
-             <button @click.prevent="loginUser" type="submit" class="btn btn-primary my-2">Login</button>
-         </div>
-     </div> 
- </div>
+<div class="container">
+    <div class="row">
+    <div class=""><h1>Login to your account</h1></div>
+        <form>
+            <div class="form-group">
+                <label for="email" class="mt-2">Your e-mail</label>
+                <input class="form-control" id="email" placeholder="Email" type="email" v-model="form.email">
+                <div class="text-danger" v-if="errors.email">{{ errors.email[0] }}</div>
+            </div>
+            <div class="form-group">
+                <label for="password" class="mt-2">Password</label>
+                <input class="form-control" id="password" placeholder="Password" type="password" v-model="form.password" name="password">
+                <div class="text-danger" v-if="errors.password">{{ errors.password[0] }}</div>
+            </div>
+            <div class="">
+                <button @click.prevent="loginUser" type="submit" class="btn btn-primary my-2">Login</button>
+            </div>
+
+        </form>
+    </div> 
+</div>
 </template>
 
  <!-- <script>
