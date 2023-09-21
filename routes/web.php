@@ -34,7 +34,7 @@ Auth::routes();
 // Route::get('/{pathMatch}', [App\Http\Controllers\Controller::class, 'index'])
 //     ->where('pathMatch', '.*');
 Route::get('/{any}', function () {
-    return view('home');
+    return view('welcome');
 })->where('any', '.*');
 // Route::get('{any}', function () {
 //     return view('welcome');

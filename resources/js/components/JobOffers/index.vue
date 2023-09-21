@@ -11,6 +11,7 @@ let joboffers = ref([])
 
 onMounted(async () => {
     if(user.value != null){
+        console.log('user', user.value)
         if(user.value.role == 2){
             console.log('EMPLOYER DETECTED!', user.value.role)
             getCompanyJoboffers()

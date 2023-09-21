@@ -10,7 +10,7 @@ onMounted(async () => {
 })
 
 const getUser = async () => {
-  let response = await axios.get('api/user')
+  let response = await axios.get('/api/user')
   user.value = response.data
 }
 </script>
