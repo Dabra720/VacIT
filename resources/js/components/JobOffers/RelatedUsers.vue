@@ -11,16 +11,17 @@ onMounted(async () => {
   if(props.joboffer){
     console.log('joboffer f: ', props.joboffer)
     getRelatedUsers(props.joboffer.id)
-
   }
 
-  const format_date = (value) => {
-    if (value) {
-      return moment(String(value)).format('DD-MM-YYYY')
-    }
-  }
+  
 
 })
+
+const format_date = (value) => {
+  if (value) {
+    return moment(String(value)).format('DD-MM-YYYY')
+  }
+}
 
 const getRelatedUsers = async (id) => {
   console.log('id', id)

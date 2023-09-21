@@ -61,7 +61,7 @@ class JobofferController extends Controller
     public function get_my_joboffers(Request $request){
         $id = $request->get('id');
         $user = User::find($id);
-        $joboffers = $user->joboffers()->get();
+        $joboffers = $user->joboffers()->with('company')->get();
 
         return response()->json([
             'joboffers' => $joboffers

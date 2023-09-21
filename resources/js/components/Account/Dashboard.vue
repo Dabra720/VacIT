@@ -10,7 +10,7 @@ let profile = ref(null)
 // let company = ref(null)
 
 onMounted(async () => {
-  console.log(user.value.id)
+  console.log('userId: ', user.value.id)
   if(user.value){
     if(user.value.role == 2){
         // profile.value = 'employer'

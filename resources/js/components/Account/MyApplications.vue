@@ -16,18 +16,26 @@ const get_joboffers = async () => {
 </script>
 <template>
   <div class="container">
-    <h1>Mijn Sollicitaties</h1>
     <div class="row">
-      <div class="col">DATUM</div>
-      <div class="col">TITEL</div>
-      <div class="col">NIVEAU</div>
-      <div class="col">UITGENODIGD</div>
-    </div>
-    <div class="row" v-for="offer in joboffers" :key="offer.id">
-      <div class="col">{{ offer.date }}</div>
-      <div class="col">{{ offer.title }}</div>
-      <div class="col">{{ offer.level }}</div>
-      <div class="col">{{ offer.pivot.invited }}</div>
+      <div class="col-3"></div>
+      <div class="col-9">
+        <h1 class="">Mijn Sollicitaties</h1>
+        <div class="row">
+          <div class="col"><span class="">DATUM</span></div>
+          <div class="col"><span class="">VACATURE</span></div>
+          <div class="col"><span class="">BEDRIJF</span></div>
+          <div class="col"><span class="">UITGENODIGD</span></div>
+        </div>
+        <div class="row border-bottom p-1" v-for="offer in joboffers" :key="offer.id">
+          <div class="col">{{ offer.date }}</div>
+          <div class="col">{{ offer.title }}</div>
+          <div class="col" v-if="offer.company">{{ offer.company.name }}</div>
+          <div class="col">{{ offer.pivot.invited }}</div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
+<style>
+  
+</style>
