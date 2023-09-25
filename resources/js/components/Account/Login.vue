@@ -1,10 +1,12 @@
 <script setup>
-import { ref, inject } from 'vue'
+import { ref, inject, computed } from 'vue'
 import { useRouter } from 'vue-router'
+import { mapActions, useStore } from 'vuex';
 
 const router = useRouter()
+const store = useStore()
 
-let user = inject('user')
+// let user = inject('user')
 
 let form = ref({
     email: '',
@@ -12,15 +14,25 @@ let form = ref({
 })
 
 let errors = ref([])
+const processing = ref(false)
 
-const loginUser = async () => {
+// const signIn = mapActions('auth/login')
+// const signIn = computed(()=> store.dispatch['auth/login'])
+const signIn = () => store.dispatch('auth/login')
+
+const login = async () => {
+    processing.value = true
     await axios.get('/sanctum/csrf-cookie')
     await axios.post('/api/login', form.value).then((res) =>{
         console.log('logged in', res);
-        user.value = res.data
-        router.push({ name: "Dashboard"}); 
+        // user.value = res.data
+        signIn()
+        // router.push({ name: "Dashboard"}); 
     }).catch((error) =>{
-        errors.value = error.response.data.errors;
+        console.log('error', error)
+        // errors.value = error.response.data.errors;
+    }).finally(() => {
+        processing.value = false
     })
 }
 
@@ -42,7 +54,7 @@ const loginUser = async () => {
                 <div class="text-danger" v-if="errors.password">{{ errors.password[0] }}</div>
             </div>
             <div class="">
-                <button @click.prevent="loginUser" type="submit" class="btn btn-primary my-2">Login</button>
+                <button @click.prevent="login" type="submit" class="btn btn-primary my-2" :disabled="processing">Login</button>
             </div>
 
         </form>

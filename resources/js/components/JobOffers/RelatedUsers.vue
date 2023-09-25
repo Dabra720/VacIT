@@ -30,6 +30,20 @@ const getRelatedUsers = async (id) => {
   users.value = response.data.users
 }
 
+const invite = (user_id, invited) => {
+  const body = {
+    joboffer_id: props.joboffer.id,
+    user_id: user_id,
+    invited: !invited
+  }
+  axios.post('/api/joboffer/accept', body).then(() => {
+    console.log('Candidate invited: ' + !invited)
+    getRelatedUsers(props.joboffer.id)
+  }).catch(() => {
+    console.log('Something went wrong')
+  })
+}
+
 </script>
 <template>
 
@@ -54,7 +68,7 @@ const getRelatedUsers = async (id) => {
       {{ user.name }}
     </div>
     <div class="col-3">
-      <input type="checkbox">
+      <input type="checkbox" @click="invite(user.id, user.pivot.invited)" :checked="user.pivot.invited">
     </div>
   </div>
 </template>

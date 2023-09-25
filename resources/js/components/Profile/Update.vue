@@ -1,13 +1,17 @@
 <script setup>
 import { ref, inject, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
 
-const user = inject('user')
+const store = useStore()
+// const user = inject('user')
 const router = useRouter()
 
+const user = store.state.auth.user
+
 const form = ref({
-  user_id: user.value.id,
-  name: user.value.name,
+  user_id: user.id,
+  name: user.name,
   surname: '',
   date_of_birth: '',
   phone: '',
@@ -18,8 +22,8 @@ const form = ref({
 })
 
 onMounted(async ()=>{
-  if(user.value){
-    getProfile(user.value.id);
+  if(user){
+    getProfile(user.id);
   }
 })
 

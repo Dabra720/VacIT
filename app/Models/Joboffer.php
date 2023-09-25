@@ -24,7 +24,9 @@ class Joboffer extends Model
 
     public function users() : BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'joboffer_user', 'joboffer_id', 'user_id')->withTimestamps();
+        return $this->belongsToMany(User::class, 'joboffer_user', 'joboffer_id', 'user_id')
+                    ->withPivot('invited')
+                    ->withTimestamps();
     }
 
     public function invited() : BelongsToMany

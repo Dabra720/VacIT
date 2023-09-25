@@ -14,10 +14,12 @@ import { createApp } from 'vue';
 //  */
 import router from './router/index.js';
 import appvue from './components/app.vue';
+import store from './store';
 
 // // const app = createApp({});
 const app = createApp(appvue);
 app.use(router);
+app.use(store);
 
 // // import ExampleComponent from './components/ExampleComponent.vue';
 // // app.component('example-component', ExampleComponent);

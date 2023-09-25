@@ -1,19 +1,22 @@
 <script setup>
 import { onMounted, ref, inject } from 'vue'
 import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
 
 const router = useRouter()
+const store = useStore()
 
-const user = inject('user')
+// const user = inject('user')
+const user = store.state.auth.user
 
 // let user = ref(null)
 let joboffers = ref([])
 
 onMounted(async () => {
-    if(user.value != null){
-        console.log('user', user.value)
-        if(user.value.role == 2){
-            console.log('EMPLOYER DETECTED!', user.value.role)
+    if(user != null){
+        console.log('user', user)
+        if(user.role == 2){
+            console.log('EMPLOYER DETECTED!', user.role)
             getCompanyJoboffers()
         }else{
             console.log('NO EMPLOYER HERE!', user)
@@ -22,19 +25,6 @@ onMounted(async () => {
     }else{
         getJoboffers()
     }
-    // await getUser().then(() =>{
-        
-    //     if(user.value.role == 2){
-    //         console.log('EMPLOYER DETECTED!', user.value.role)
-    //         getCompanyJoboffers()
-    //     }else{
-    //         console.log('NO EMPLOYER HERE!', user)
-    //         getJoboffers()
-    //     }
-    // }).catch(() => {
-    //     // No user, show all
-    //     getJoboffers()
-    // })
     
 })
 
@@ -45,7 +35,7 @@ const getJoboffers = async () => {
 }
 
 const getCompanyJoboffers = async () => {
-    let response = await axios.get("/api/get_joboffers?id="+user.value.company_id)
+    let response = await axios.get("/api/get_joboffers?id="+user.company_id)
     joboffers.value = response.data.joboffers
 }
 

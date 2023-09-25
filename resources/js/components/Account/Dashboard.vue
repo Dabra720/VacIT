@@ -1,24 +1,29 @@
 <script setup>
 import { ref, inject, onMounted } from 'vue'
+import { useStore } from 'vuex'
 import CompanyProfile from '../Profile/Company.vue'
 import UserProfile from '../Profile/User.vue'
 import UpdateProfile from '../Profile/Update.vue'
 
-const user = inject('user')
+const store = useStore()
+
+// const user = inject('user')
+const user = store.state.auth.user
 // const profile = ref('')
 let profile = ref(null)
 // let company = ref(null)
 
 onMounted(async () => {
-  console.log('userId: ', user.value.id)
-  if(user.value){
-    if(user.value.role == 2){
+
+  console.log('user: ', user)
+  if(user){
+    if(user.role == 2){
         // profile.value = 'employer'
-        await getCompany(user.value.company_id)
+        await getCompany(user.company_id)
     }
-    if(user.value.role == 3){
+    if(user.role == 3){
         // profile.value = 'user'
-        await getProfile(user.value.id)
+        await getProfile(user.id)
     }
   }
 })

@@ -2,15 +2,19 @@
 import RelatedJoboffers from './RelatedJoboffers.vue';
 import RelatedUsers from './RelatedUsers.vue';
 import { onMounted, ref, inject } from 'vue'
+import { useStore } from 'vuex'
 
-const user = inject('user')
+const store = useStore()
+
+// const user = inject('user')
+const user = store.state.auth.user
 
 const form = ref(null)
 
 const props = defineProps(['id'])
 
 onMounted(async () => {
-  console.log('user', user.value)
+  console.log('user', user)
   getJoboffer()
   
 })
@@ -24,7 +28,7 @@ const getJoboffer = async () => {
 
 const apply = () => {
   let body = {
-    user_id: user.value.id,
+    user_id: user.id,
     joboffer_id: form.value.id
   }
   console.log('body', body);
