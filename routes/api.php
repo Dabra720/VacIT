@@ -37,8 +37,9 @@ Route::post('logout', [LoginController::class, 'logout']);
 
 // Profile routes
 Route::get('profile/user', [UserProfileController::class, 'show_profile']);
-Route::get('profile/company', [CompanyController::class, 'show_company']);
 Route::post('profile/save', [UserProfileController::class, 'update_or_create']);
+Route::get('profile/company', [CompanyController::class, 'show_company']);
+Route::post('company/update', [CompanyController::class, 'update']);
 Route::get('get_email', [UserProfileController::class, 'get_email']);
 Route::get('my_joboffers', [JobofferController::class, 'get_my_joboffers']);
 

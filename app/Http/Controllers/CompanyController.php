@@ -15,4 +15,22 @@ class CompanyController extends Controller
             'company' => $company
         ], 200);
     }
+
+    public function update(Request $request){
+        $request->validate([
+            'id' => ['required'],
+            'name' => ['required'],
+            'city' => ['required']
+        ]);
+
+        $id = $request->get('id');
+
+        $company = Company::find($id);
+
+        $company->name = $request->name;
+        $company->city = $request->city;
+        $company->save();
+
+        return response('Succes', 200);
+    }
 }

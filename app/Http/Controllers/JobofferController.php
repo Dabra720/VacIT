@@ -67,7 +67,7 @@ class JobofferController extends Controller
         $joboffer->description = $request->description;
 
         $joboffer->save();
-        
+
         return response('Success', 200);
     }
 

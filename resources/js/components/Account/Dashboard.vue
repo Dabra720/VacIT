@@ -29,14 +29,14 @@ onMounted(async () => {
 })
 
 const getProfile = async (id) => {
-  let response = await axios.get(`api/profile/user?id=${id}`)
+  let response = await axios.get(`/api/profile/user?id=${id}`)
   console.log('profile', response.data)
   profile.value = response.data.profile
 }
 
 const getCompany = async (id) => {
     console.log(`id: ${id}`)
-  let response = await axios.get(`api/profile/company?id=${id}`)
+  let response = await axios.get(`/api/profile/company?id=${id}`)
   console.log('company', response.data)
   profile.value = response.data.company
 }

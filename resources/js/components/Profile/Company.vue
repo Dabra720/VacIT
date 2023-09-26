@@ -1,14 +1,25 @@
 <script setup>
+import { useRouter } from 'vue-router'
+const router = useRouter()
 defineProps(['profile'])
+
+const updateCompany = () => {
+  router.push('/update/company')
+}
 
 </script>
 <template>
-  <div class="row">
+  <div class="row py-4">
       <div class="col-3">
         <!-- Profile picture -->
       </div>
       <div class="col-9">
-        <h1>Mijn Bedrijf</h1>
+        <div class="d-flex justify-content-between">
+          <div><h1>Mijn Bedrijf</h1></div>
+          <div>
+            <button @click="updateCompany" class="btn btn-primary">Wijzig profiel</button>
+          </div>
+        </div>
         <div class="row">
           <div class="col">
             <label for="name">Naam</label>

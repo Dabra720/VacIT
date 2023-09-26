@@ -19,6 +19,7 @@ const MyApplications = () => import('../components/Account/MyApplications.vue')
 const UserProfile = () => import('../components/Profile/Show.vue')
 const NewJoboffer = () => import('../components/JobOffers/New.vue')
 const UpdateJoboffer = () => import('../components/JobOffers/Update.vue')
+const UpdateCompany = () => import('../components/Profile/UpdateCompany.vue')
 
 
 const publicRoutes = [
@@ -104,6 +105,15 @@ const mainRoutes = [
         path: '/updateprofile',
         name: 'UpdateProfile',
         component: UpdateProfile,
+        meta:{
+          middleware:"auth",
+          title:`Profiel`
+        }
+      },
+      {
+        path: '/update/company',
+        name: 'UpdateCompany',
+        component: UpdateCompany,
         meta:{
           middleware:"auth",
           title:`Profiel`
