@@ -42,6 +42,7 @@ Route::get('profile/company', [CompanyController::class, 'show_company']);
 Route::post('company/update', [CompanyController::class, 'update']);
 Route::get('get_email', [UserProfileController::class, 'get_email']);
 Route::get('my_joboffers', [JobofferController::class, 'get_my_joboffers']);
+Route::get('my_invites', [JobofferController::class, 'get_invites']);
 
 // Joboffer routes
 Route::get('joboffers', [JobofferController::class, 'get_all_joboffers']);

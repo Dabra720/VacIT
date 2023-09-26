@@ -105,6 +105,15 @@ class JobofferController extends Controller
             'joboffers' => $joboffers
         ]);
     }
+    public function get_invites(Request $request){
+        $id = $request->get('id');
+        $user = User::find($id);
+        $joboffers = $user->joboffers()->with('company')->where('invited', true)->get();
+
+        return response()->json([
+            'joboffers' => $joboffers
+        ]);
+    }
     public function toggle_invite(Request $request){
         $joboffer = Joboffer::find($request->joboffer_id);
         $joboffer->users()->updateExistingPivot($request->user_id, 

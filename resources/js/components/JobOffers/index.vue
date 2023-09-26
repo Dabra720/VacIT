@@ -77,8 +77,10 @@ const onShow = (id) => {
                                 <p class="card-text">{{ joboffer.description }}</p>
                             </div>
                         </div>
-                        <div class="col-2">
-                            <router-link to="#" @click="onShow(joboffer.id)" class="btn btn-secondary" >GO</router-link>
+                        <div class="col-2 d-flex align-items-center">
+                            <div class="text-center">
+                                <router-link to="#" @click="onShow(joboffer.id)" class="btn btn-secondary" >GO</router-link>
+                            </div>
                         </div>
                     </div>
                 </div>
