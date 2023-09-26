@@ -1,10 +1,12 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useStore } from 'vuex'
 
 const store = useStore()
 
 const user = store.state.auth.user
+
+const props = defineProps(['id'])
 
 const form = ref({
   title: '',
@@ -14,9 +16,18 @@ const form = ref({
   company_id: user.company_id
 })
 
+onMounted(() => {
+  getJoboffer()
+})
+
+const getJoboffer = async () => {
+  let response = await axios.get('/api/show_joboffer/'+props.id)
+  form.value = response.data.joboffer
+}
+
 const save = () => {
-  axios.post('/api/joboffer/create', form.value).then(()=>{
-    alert('Vacature aangemaakt!')
+  axios.post('/api/joboffer/update', form.value).then(()=>{
+    alert('Vacature gewijzigd!')
   }).catch(()=>{
     alert('Daar ging iets fout..')
   })
@@ -30,7 +41,7 @@ const save = () => {
         <!-- Company picture -->
       </div>
       <div class="col-9">
-        <h1>Maak hier uw nieuwe vacature</h1>
+        <h1>Wijzig hier uw vacature</h1>
         <div class="row">
           <div class="col-12">
             <div class="form-group">

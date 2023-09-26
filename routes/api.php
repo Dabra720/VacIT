@@ -41,11 +41,14 @@ Route::get('profile/company', [CompanyController::class, 'show_company']);
 Route::post('profile/save', [UserProfileController::class, 'update_or_create']);
 Route::get('get_email', [UserProfileController::class, 'get_email']);
 Route::get('my_joboffers', [JobofferController::class, 'get_my_joboffers']);
+
 // Joboffer routes
 Route::get('joboffers', [JobofferController::class, 'get_all_joboffers']);
 Route::get('get_joboffers', [JobofferController::class, 'get_joboffers']);
 Route::get('show_joboffer/{id}', [JobofferController::class, 'show_joboffer']);
 Route::get('company_joboffers/{id}', [JobofferController::class, 'get_company_joboffers']);
+Route::post('joboffer/create', [JobofferController::class, 'create']);
+Route::post('joboffer/update', [JobofferController::class, 'update']);
 
 Route::post('joboffer/apply', [JobofferController::class, 'add_joboffer_user']);
 Route::post('joboffer/accept', [JobofferController::class, 'toggle_invite']);

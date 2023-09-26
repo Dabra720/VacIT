@@ -30,7 +30,45 @@ class JobofferController extends Controller
     }
 
     public function create(Request $request){
+        $request->validate([
+            'title' => ['required'],
+            'date' => ['required'],
+            'level' => ['required'],
+            'description' => ['required'],
+            'company_id' => ['required']
+        ]);
 
+        Joboffer::create([
+            'title' => $request->title,
+            'date' => $request->date,
+            'level' => $request->level,
+            'description' => $request->description,
+            'company_id' => $request->company_id
+        ]);
+
+        return response('Success', 200);
+    }
+
+    public function update(Request $request){
+        $id = $request->get('id');
+        $request->validate([
+            'title' => ['required'],
+            'date' => ['required'],
+            'level' => ['required'],
+            'description' => ['required'],
+            'company_id' => ['required']
+        ]);
+
+        $joboffer = Joboffer::find($id);
+
+        $joboffer->title = $request->title;
+        $joboffer->date = $request->date;
+        $joboffer->level = $request->level;
+        $joboffer->description = $request->description;
+
+        $joboffer->save();
+        
+        return response('Success', 200);
     }
 
     public function show_joboffer($id){
@@ -46,7 +84,7 @@ class JobofferController extends Controller
         $joboffer = Joboffer::find($request->joboffer_id);
 
         $joboffer->users()->syncWithoutDetaching($user->id);
-        return response('Success');
+        return response('Success', 200);
     }
 
     public function get_all_candidates(Request $request){

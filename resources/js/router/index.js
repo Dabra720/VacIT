@@ -17,6 +17,8 @@ const Dashboard = () => import('../components/Account/Dashboard.vue')
 const UpdateProfile = () => import('../components/Profile/Update.vue')
 const MyApplications = () => import('../components/Account/MyApplications.vue')
 const UserProfile = () => import('../components/Profile/Show.vue')
+const NewJoboffer = () => import('../components/JobOffers/New.vue')
+const UpdateJoboffer = () => import('../components/JobOffers/Update.vue')
 
 
 const publicRoutes = [
@@ -124,6 +126,25 @@ const mainRoutes = [
         meta:{
           middleware:"auth",
           title:`Details`
+        }
+      },
+      {
+        path: '/joboffer/new',
+        name: 'NewJoboffer',
+        component: NewJoboffer,
+        meta: {
+          middleware: "auth",
+          title: "Nieuwe vacature"
+        }
+      },
+      {
+        path: '/joboffer/update/:id',
+        name: 'UpdateJoboffer',
+        component: UpdateJoboffer,
+        props: true,
+        meta: {
+          middleware: "auth",
+          title: "Wijzig vacature"
         }
       },
       {

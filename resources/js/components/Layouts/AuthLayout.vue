@@ -53,10 +53,13 @@ const logout = async () => {
                     <ul class="navbar-nav ms-auto">
                       <!-- Authentication Links -->
                       <li class="nav-item" v-if="user.role != 1">
-                          <router-link to="/dashboard" class="nav-link">Mijn profiel</router-link>
+                        <router-link to="/dashboard" class="nav-link">Mijn profiel</router-link>
                       </li>
                       <li class="nav-item" v-if="user.role == 3">
-                          <router-link to="/applications" class="nav-link">Mijn sollicitaties</router-link>
+                        <router-link to="/applications" class="nav-link">Mijn sollicitaties</router-link>
+                      </li>
+                      <li class="nav-item" v-if="user.role == 2">
+                        <router-link to="/joboffer/new" class="nav-link">Nieuwe vacature</router-link>
                       </li>
                       <li class="nav-item" >
                         <a class="nav-link" @click="logout">Log uit</a>

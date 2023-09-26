@@ -3,7 +3,9 @@ import RelatedJoboffers from './RelatedJoboffers.vue';
 import RelatedUsers from './RelatedUsers.vue';
 import { onMounted, ref, inject } from 'vue'
 import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 
+const router = useRouter()
 const store = useStore()
 
 // const user = inject('user')
@@ -40,6 +42,9 @@ const apply = () => {
   })
 }
 
+const updateJoboffer = () => {
+  router.push('/joboffer/update/'+form.value.id)
+}
 </script>
 <template>
   <div class="container" v-if="form">
@@ -49,7 +54,12 @@ const apply = () => {
       </aside>
       <main class="col-md-10">
         <div class="row" >
-          <h5>{{ form.date }}</h5>
+          <div class="d-flex justify-content-between">
+            <div><h5>{{ form.date }}</h5></div>
+            <div v-if="user.role == 2">
+              <button @click="updateJoboffer" class="btn btn-primary">Wijzig vacature</button>
+            </div>
+          </div>
           <h3 v-if="form.company">{{ form.title }} voor {{ form.company.name }}</h3>
         </div>
         <div class="row">
