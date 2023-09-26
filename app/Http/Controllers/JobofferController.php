@@ -45,7 +45,7 @@ class JobofferController extends Controller
         Debugbar::info($user->id);
         $joboffer = Joboffer::find($request->joboffer_id);
 
-        $joboffer->users()->sync($user->id);
+        $joboffer->users()->syncWithoutDetaching($user->id);
         return response('Success');
     }
 

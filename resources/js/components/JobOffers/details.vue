@@ -20,6 +20,7 @@ onMounted(async () => {
 })
 
 const getJoboffer = async () => {
+  console.log(props)
   let response = await axios.get(`/api/show_joboffer/${props.id}`)
   // console.log('joboffer', response.data)
   form.value = response.data.joboffer

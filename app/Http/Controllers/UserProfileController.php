@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Models\UserProfile;
 // use Barryvdh\Debugbar\Facades\Debugbar;
 use Illuminate\Http\Request;
@@ -18,6 +19,15 @@ class UserProfileController extends Controller
         // Debugbar::info('profile', $profile); // Dit werkt niet voor ajax
         return response()->json([
             'profile' => $profile
+        ], 200);
+    }
+
+    public function get_email(Request $request){
+        $user_id = $request->get('id');
+        $email = User::where('id', $user_id)->get('email');
+
+        return response()->json([
+            'email' => $email[0]->email
         ], 200);
     }
 

@@ -16,6 +16,7 @@ const NotFound = () => import('../components/NotFound.vue')
 const Dashboard = () => import('../components/Account/Dashboard.vue')
 const UpdateProfile = () => import('../components/Profile/Update.vue')
 const MyApplications = () => import('../components/Account/MyApplications.vue')
+const UserProfile = () => import('../components/Profile/Show.vue')
 
 
 const publicRoutes = [
@@ -123,6 +124,16 @@ const mainRoutes = [
         meta:{
           middleware:"auth",
           title:`Details`
+        }
+      },
+      {
+        path: '/profile/:id',
+        name: 'Userprofile',
+        component: UserProfile,
+        props: true,
+        meta: {
+          middleware: 'auth',
+          title: 'Profiel'
         }
       },
       {

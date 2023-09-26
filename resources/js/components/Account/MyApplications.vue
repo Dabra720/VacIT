@@ -1,7 +1,11 @@
 <script setup>
 import { onMounted, ref, inject } from 'vue'
+import { useStore } from 'vuex'
 
-const user = inject('user')
+const store = useStore()
+
+// const user = inject('user')
+const user = store.state.auth.user
 const joboffers = ref([])
 
 onMounted(async () => {
@@ -9,7 +13,7 @@ onMounted(async () => {
 })
 
 const get_joboffers = async () => {
-  let response = await axios.get(`/api/my_joboffers?id=${user.value.id}`)
+  let response = await axios.get(`/api/my_joboffers?id=${user.id}`)
   console.log('response', response)
   joboffers.value = response.data.joboffers
 }

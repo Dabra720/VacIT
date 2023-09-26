@@ -1,20 +1,19 @@
 <script setup>
 import { onMounted, ref } from 'vue'
+import { useRouter } from 'vue-router'
 import moment from 'moment'
 
+const router = useRouter()
 const props = defineProps(['joboffer'])
 
 const users = ref([]);
 
 onMounted(async () => {
-  console.log('users mounting', props)
+  // console.log('users mounting', props)
   if(props.joboffer){
-    console.log('joboffer f: ', props.joboffer)
+    // console.log('joboffer f: ', props.joboffer)
     getRelatedUsers(props.joboffer.id)
   }
-
-  
-
 })
 
 const format_date = (value) => {
@@ -24,9 +23,9 @@ const format_date = (value) => {
 }
 
 const getRelatedUsers = async (id) => {
-  console.log('id', id)
+  // console.log('id', id)
   let response = await axios.get("/api/joboffer/get_candidates?id="+id)
-  console.log('related users', response)
+  // console.log('related users', response)
   users.value = response.data.users
 }
 
@@ -42,6 +41,11 @@ const invite = (user_id, invited) => {
   }).catch(() => {
     console.log('Something went wrong')
   })
+}
+
+const show_profile = (id) => {
+  console.log('/profile/'+id)
+  router.push('/profile/'+id)
 }
 
 </script>
@@ -65,7 +69,9 @@ const invite = (user_id, invited) => {
       <span class="borange">{{ format_date(user.pivot.created_at) }}</span>
     </div>
     <div class="col-6">
-      {{ user.name }}
+      <router-link to="#" @click="show_profile(user.id)">
+        <span class="borange">{{ user.name }}</span>
+      </router-link>
     </div>
     <div class="col-3">
       <input type="checkbox" @click="invite(user.id, user.pivot.invited)" :checked="user.pivot.invited">

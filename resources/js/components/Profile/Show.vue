@@ -1,13 +1,25 @@
 <script setup>
 import { ref, onMounted } from 'vue'
-import {useRouter} from 'vue-router'
 
-const router = useRouter()
+const props = defineProps(['id'])
 
+const profile = ref(null)
+const email = ref('')
 
+onMounted(async () => {
+  getProfile()
+  getEmail()
+})
 
-const updateProfile = () => {
-  router.push('/updateprofile')
+const getProfile = async () => {
+  console.log('Props',props)
+  let response = await axios.get(`/api/profile/user?id=${props.id}`)
+  profile.value = response.data.profile
+}
+
+const getEmail = async () => {
+  let response = await axios.get(`/api/get_email?id=${props.id}`)
+  email.value = response.data.email
 }
 
 </script>
@@ -16,7 +28,7 @@ const updateProfile = () => {
     <div class="col-3">
       <!-- Profile picture -->
     </div>
-    <div class="col-9">
+    <div class="col-9" v-if="profile">
       <div class="d-flex justify-content-between">
         <div><h1>{{profile.name}}'s Profiel</h1></div>
       </div>
@@ -33,7 +45,7 @@ const updateProfile = () => {
       <div class="row">
         <div class="col">
           <label for="email">E-mail</label>
-          <p id="email" class="borange">{{ user.email }}</p>
+          <p id="email" class="borange">{{ email }}</p>
         </div>
       </div>
       <div class="row">
