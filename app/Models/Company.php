@@ -10,11 +10,22 @@ class Company extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'city',
+        'image'
+    ];
+
     /**
      * Get the joboffers for this company.
      */
     public function joboffers(): HasMany
     {
         return $this->hasMany(Joboffer::class);
+    }
+
+    public function users(): HasMany
+    {
+        return $this->hasMany(User::class);
     }
 }

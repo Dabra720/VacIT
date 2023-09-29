@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserProfileController;
 use Barryvdh\Debugbar\Facades\Debugbar;
 
@@ -55,3 +56,5 @@ Route::post('joboffer/update', [JobofferController::class, 'update']);
 Route::post('joboffer/apply', [JobofferController::class, 'add_joboffer_user']);
 Route::post('joboffer/accept', [JobofferController::class, 'toggle_invite']);
 Route::get('joboffer/get_candidates', [JobofferController::class, 'get_all_candidates']);
+
+Route::post('import/employers', [UserController::class, 'import_employers']);
