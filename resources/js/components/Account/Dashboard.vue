@@ -17,11 +17,11 @@ onMounted(async () => {
 
   console.log('user: ', user)
   if(user){
-    if(user.role == 2){
+    if(user.role_id == 2){
         // profile.value = 'employer'
         await getCompany(user.company_id)
     }
-    if(user.role == 3){
+    if(user.role_id == 3){
         // profile.value = 'user'
         await getProfile(user.id)
     }
@@ -35,7 +35,7 @@ const getProfile = async (id) => {
 }
 
 const getCompany = async (id) => {
-    console.log(`id: ${id}`)
+  console.log(`id: ${id}`)
   let response = await axios.get(`/api/profile/company?id=${id}`)
   console.log('company', response.data)
   profile.value = response.data.company
@@ -44,8 +44,8 @@ const getCompany = async (id) => {
 </script>
 <template>
   <div class="container" v-if="profile">
-    <UserProfile v-if="user.role == 3" :profile="profile" :user="user"/>
-    <CompanyProfile v-if="user.role == 2" :profile="profile"/>
+    <UserProfile v-if="user.role_id == 3" :profile="profile" :user="user"/>
+    <CompanyProfile v-if="user.role_id == 2" :profile="profile"/>
   </div>
   <div class="container" v-else>
     <UpdateProfile />

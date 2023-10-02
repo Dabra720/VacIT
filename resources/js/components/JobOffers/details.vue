@@ -23,9 +23,19 @@ onMounted(async () => {
 
 const getJoboffer = async () => {
   console.log(props)
-  let response = await axios.get(`/api/show_joboffer/${props.id}`)
-  // console.log('joboffer', response.data)
-  form.value = response.data.joboffer
+  axios.get(`/api/show_joboffer/${props.id}`)
+  .then((response) => {
+    console.log('joboffer', response)
+    form.value = response.data.joboffer
+  })
+  .catch((err) => {
+    console.log('err', err)
+    if(err.response.status == 403){
+      console.log('Unauthorized')
+      router.push({name: 'Unauthorized'})
+    }
+  })
+  
   // getCompanyJoboffers(response.data.joboffer.company_id)
 }
 
@@ -38,6 +48,10 @@ const apply = () => {
   axios.post('/api/joboffer/apply', body).then((res)=> {
     console.log('apply: ', res)
   }).catch((err)=>{
+    if(err.response.status == 403){
+      console.log('Unauthorized')
+      router.push({name: 'Unauthorized'})
+    }
     console.log('error', err)
   })
 }
@@ -45,6 +59,7 @@ const apply = () => {
 const updateJoboffer = () => {
   router.push('/joboffer/update/'+form.value.id)
 }
+
 </script>
 <template>
   <div class="container" v-if="form">
@@ -56,7 +71,7 @@ const updateJoboffer = () => {
         <div class="row" >
           <div class="d-flex justify-content-between">
             <div><h5>{{ form.date }}</h5></div>
-            <div v-if="user.role == 2">
+            <div v-if="user.role_id == 2 && user.company_id == form.company_id">
               <button @click="updateJoboffer" class="btn btn-primary">Wijzig vacature</button>
             </div>
           </div>
@@ -81,12 +96,12 @@ const updateJoboffer = () => {
       <div class="col-md-2">
         
       </div>
-      <div class="col-10" v-if="user.role == 3">
+      <div class="col-10" v-if="user.role_id == 3">
         <a @click="apply" class="apply">SOLLICITEER DIRECT</a>
         <!-- If Candidate: Related Joboffers -->
         <RelatedJoboffers v-if="form.company" :company="form.company"/>
       </div>
-      <div class="col-10" v-if="user.role == 2">
+      <div class="col-10" v-if="user.role_id == 2">
         <!-- If Employer: Related Users -->
         <RelatedUsers v-if="form" :joboffer="form"/>
       </div>

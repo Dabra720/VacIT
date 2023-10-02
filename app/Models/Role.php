@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Role extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['name'];
+
+    public const ADMIN = 1;
+    public const EMPLOYER = 2;
+    public const CANDIDATE = 3;
+    
 }

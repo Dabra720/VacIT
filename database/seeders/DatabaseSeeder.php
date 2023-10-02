@@ -22,24 +22,37 @@ class DatabaseSeeder extends Seeder
     // }
     public function run()
     {
+        $roles = [
+            'ADMIN',
+            'EMPLOYER',
+            'CANDIDATE',
+        ];
+
+        foreach($roles as $role){
+            \App\Models\Role::create([
+                'name' => $role,
+            ]);
+        }
+        
+
         \App\Models\User::create([
             'name' => 'Admin',
             'email' => 'admin@test.com',
             'password' => Hash::make('admin'),
-            'role' => 1
+            'role_id' => 1
         ]);
         \App\Models\User::create([
             'name' => 'Employer',
             'email' => 'employ@test.com',
             'password' => Hash::make('secret'),
-            'role' => 2,
+            'role_id' => 2,
             'company_id' => 4
         ]);
         \App\Models\User::create([
             'name' => 'User',
             'email' => 'user@test.com',
             'password' => Hash::make('secret'),
-            'role' => 3,
+            'role_id' => 3,
             'profile_id' => 1
         ]);
 

@@ -13,10 +13,17 @@ onMounted(()=>{
 })
 
 const getInvites = async () => {
-
-  let response = await axios.get('/api/my_invites?id='+props.user.id)
-  console.log('invites: ', response.data)
-  invites.value = response.data.joboffers
+  axios.get(`/api/my_invites?id=${props.user.id}`).then(response=>{
+    invites.value = response.data.joboffers
+  }).catch(err=>{
+    if(err.response.status == 403){
+      console.log('Unauthorized')
+      router.push({name: 'Unauthorized'})
+    }
+  })
+  // let response = await axios.get('/api/my_invites?id='+props.user.id)
+  // console.log('invites: ', response.data)
+  // invites.value = response.data.joboffers
 }
 
 const updateProfile = () => {
@@ -80,7 +87,7 @@ const updateProfile = () => {
       </div>
     </div>
   </div>
-  <div class="row">
+  <div class="row" v-if="invites.length > 0">
     <div class="col-3"></div>
     <div class="col-9">
       <h1>Alle uitnodigingen</h1>

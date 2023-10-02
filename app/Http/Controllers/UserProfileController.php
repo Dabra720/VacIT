@@ -13,10 +13,6 @@ class UserProfileController extends Controller
     public function show_profile(Request $request){
         $user_id = $request->get('id');
         $profile = UserProfile::where('user_id','LIKE', $user_id)->first();
-        // $debugbar = new DebugBar();
-        // $debugbar->info($profile);
-        // $debugbar->sendDataInHeaders();
-        // Debugbar::info('profile', $profile); // Dit werkt niet voor ajax
         return response()->json([
             'profile' => $profile
         ], 200);
@@ -33,7 +29,6 @@ class UserProfileController extends Controller
 
     public function update_or_create(Request $request)
     {
-
         $request->validate([
             'user_id' => ['required'],
             'name' => ['required'],
@@ -44,6 +39,13 @@ class UserProfileController extends Controller
             'postcode' =>['required'],
             'city' =>['required'],
         ]);
+
+        $profile = UserProfile::where('user_id', 'LIKE', $request->user_id)->first();
+        if($profile){
+            $this->authorize('update', $profile);
+        }else{
+            $this->authorize('create');
+        }
 
         UserProfile::updateOrCreate(
             ['user_id' => $request->user_id],

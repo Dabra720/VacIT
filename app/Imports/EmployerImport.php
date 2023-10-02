@@ -32,7 +32,7 @@ class EmployerImport implements ToModel, WithHeadingRow, WithUpserts
         ],
         [
             'password' => Hash::make($row['password']),
-            'role'      => 2
+            'role_id'      => 2
         ]);
     }
 

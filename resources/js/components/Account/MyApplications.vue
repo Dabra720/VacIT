@@ -1,7 +1,9 @@
 <script setup>
 import { onMounted, ref, inject } from 'vue'
+import { useRouter } from 'vue-router';
 import { useStore } from 'vuex'
 
+const router = useRouter()
 const store = useStore()
 
 // const user = inject('user')
@@ -13,9 +15,16 @@ onMounted(async () => {
 })
 
 const get_joboffers = async () => {
-  let response = await axios.get(`/api/my_joboffers?id=${user.id}`)
-  console.log('response', response)
-  joboffers.value = response.data.joboffers
+  axios.get(`/api/my_joboffers?id=${user.id}`).then((response)=>{
+    joboffers.value = response.data.joboffers
+  }).catch(err => {
+    if(err.response.status == 403){
+      router.push({name: 'Unauthorized'})
+    }
+  })
+  // let response = await axios.get(`/api/my_joboffers?id=${user.id}`)
+  // console.log('response', response)
+  // joboffers.value = response.data.joboffers
 }
 </script>
 <template>

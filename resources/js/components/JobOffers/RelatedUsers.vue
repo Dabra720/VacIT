@@ -23,10 +23,17 @@ const format_date = (value) => {
 }
 
 const getRelatedUsers = async (id) => {
-  // console.log('id', id)
-  let response = await axios.get("/api/joboffer/get_candidates?id="+id)
-  // console.log('related users', response)
-  users.value = response.data.users
+  axios.get("/api/joboffer/get_candidates?id="+id).then((response)=>{
+    users.value = response.data.users
+  }).catch(err=>{
+    if(err.response.status == 403){
+      router.push({name: 'Unauthorized'})
+    }else{
+      console.log('Error', err)
+    }
+  })
+  // let response = await axios.get("/api/joboffer/get_candidates?id="+id)
+  // users.value = response.data.users
 }
 
 const invite = (user_id, invited) => {
@@ -38,7 +45,10 @@ const invite = (user_id, invited) => {
   axios.post('/api/joboffer/accept', body).then(() => {
     console.log('Candidate invited: ' + !invited)
     getRelatedUsers(props.joboffer.id)
-  }).catch(() => {
+  }).catch((err) => {
+    if(err.response.status == 403){
+      router.push({name: 'Unauthorized'})
+    }
     console.log('Something went wrong')
   })
 }

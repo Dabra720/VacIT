@@ -10,9 +10,10 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class UserController extends Controller
 {
-    public function import_employers(Request $request) 
+    public function import_employers($path) 
     {
-        Excel::import(new EmployerImport, $request->file('employers'));
+        // Excel::import(new EmployerImport, $request->file('employers'));
+        Excel::import(new EmployerImport, $path);
         
         // return redirect('/')->with('success', 'All good!');
         return 'success';

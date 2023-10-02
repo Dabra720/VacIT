@@ -11,6 +11,7 @@ const Register = () => import('../components/Account/Register.vue')
 const Home = () => import('../components/JobOffers/index.vue')
 const JobofferDetails = () => import('../components/JobOffers/Details.vue')
 const NotFound = () => import('../components/NotFound.vue')
+const Unauthorized = () => import('../components/Errors/Unauthorized.vue')
 
 /* Authenticated */
 const Dashboard = () => import('../components/Account/Dashboard.vue')
@@ -89,8 +90,8 @@ const mainRoutes = [
         component: Home,
         meta:{
           middleware:"auth",
-          title:`Home`
-        }
+          title:`Home`,
+        },
       },
       {
         path: '/dashboard',
@@ -98,8 +99,8 @@ const mainRoutes = [
         component: Dashboard,
         meta:{
           middleware:"auth",
-          title:`Profiel`
-        }
+          title:`Profiel`,
+        },
       },
       {
         path: '/updateprofile',
@@ -107,8 +108,8 @@ const mainRoutes = [
         component: UpdateProfile,
         meta:{
           middleware:"auth",
-          title:`Profiel`
-        }
+          title:`Profiel`,
+        },
       },
       {
         path: '/update/company',
@@ -116,8 +117,8 @@ const mainRoutes = [
         component: UpdateCompany,
         meta:{
           middleware:"auth",
-          title:`Profiel`
-        }
+          title:`Profiel`,
+        },
       },
       {
         path: '/applications',
@@ -125,8 +126,8 @@ const mainRoutes = [
         component: MyApplications,
         meta:{
           middleware:"auth",
-          title:`Mijn vacatures`
-        }
+          title:`Mijn vacatures`,
+        },
       },
       {
         path: '/joboffer/show/:id',
@@ -135,8 +136,8 @@ const mainRoutes = [
         props: true,
         meta:{
           middleware:"auth",
-          title:`Details`
-        }
+          title:`Details`,
+        },
       },
       {
         path: '/joboffer/new',
@@ -144,8 +145,9 @@ const mainRoutes = [
         component: NewJoboffer,
         meta: {
           middleware: "auth",
-          title: "Nieuwe vacature"
-        }
+          title: "Nieuwe vacature",
+          askpermission: true,
+        },
       },
       {
         path: '/joboffer/update/:id',
@@ -154,8 +156,8 @@ const mainRoutes = [
         props: true,
         meta: {
           middleware: "auth",
-          title: "Wijzig vacature"
-        }
+          title: "Wijzig vacature",
+        },
       },
       {
         path: '/profile/:id',
@@ -164,8 +166,17 @@ const mainRoutes = [
         props: true,
         meta: {
           middleware: 'auth',
-          title: 'Profiel'
-        }
+          title: 'Profiel',
+        },
+      },
+      {
+        path: '/Unauthorized',
+        name: 'Unauthorized',
+        component: Unauthorized,
+        meta:{
+          middleware:"auth",
+          title:`Unauthorized`,
+        },
       },
       {
         path: '/NotFound',
@@ -173,11 +184,11 @@ const mainRoutes = [
         component: NotFound,
         meta:{
           middleware:"auth",
-          title:`Niet gevonden`
-        }
-      }
-    ]
-  }
+          title:`Niet gevonden`,
+        },
+      },
+    ],
+  },
 ]
 
 
@@ -193,8 +204,17 @@ router.beforeEach((to, from, next) => {
   document.title = `${to.meta.title}`
   if(to.meta.middleware=="auth"){
     if(store.state.auth.authenticated){
+      if(to.meta.askpermission){
+        if([1,2].includes(store.state.auth.user.role_id)){ // Employer of Admin
+          next()
+        }else{
+          next({name:"Unauthorized"})
+        }
+      }else{
+        next()
+      }
       // console.log("User is authenticated")
-      next()
+      
     }else{
       // console.log("User is not logged in")
       next({name:"Login"})

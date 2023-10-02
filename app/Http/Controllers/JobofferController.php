@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 
 class JobofferController extends Controller
 {
-    public function get_all_joboffers(){
+    public function index(){
         DebugBar::addMessage('Getting all joboffers');
         $joboffers = Joboffer::with('company')->orderBy('date', 'DESC')->get();
         return response()->json([
@@ -30,23 +30,27 @@ class JobofferController extends Controller
     }
 
     public function create(Request $request){
+        $this->authorize('create', Joboffer::class);
+
         $request->validate([
             'title' => ['required'],
             'date' => ['required'],
             'level' => ['required'],
             'description' => ['required'],
-            'company_id' => ['required']
+            'company_id' => ['required'],
         ]);
 
-        Joboffer::create([
+        $joboffer = Joboffer::create([
             'title' => $request->title,
             'date' => $request->date,
             'level' => $request->level,
             'description' => $request->description,
-            'company_id' => $request->company_id
+            'company_id' => $request->company_id,
         ]);
 
-        return response('Success', 200);
+        return response()->json([
+            'joboffer' => $joboffer,
+        ], 200);
     }
 
     public function update(Request $request){
@@ -61,6 +65,8 @@ class JobofferController extends Controller
 
         $joboffer = Joboffer::find($id);
 
+        $this->authorize('update', [$joboffer]);
+
         $joboffer->title = $request->title;
         $joboffer->date = $request->date;
         $joboffer->level = $request->level;
@@ -71,8 +77,20 @@ class JobofferController extends Controller
         return response('Success', 200);
     }
 
-    public function show_joboffer($id){
+    public function delete(Request $request)
+    {
+        $id = $request->get('id');
         $joboffer = JobOffer::with('company')->find($id);
+        $this->authorize('delete', $joboffer);
+        $joboffer->delete();
+    }
+
+    public function show($id){
+        $joboffer = JobOffer::with('company')->find($id);
+        $this->authorize('view', $joboffer);
+        // if($request->user()->cannot('view', $joboffer)){
+        //     return response('Nope', 403);
+        // }
         return response()->json([
             'joboffer' => $joboffer
         ]);
@@ -80,9 +98,9 @@ class JobofferController extends Controller
 
     public function add_joboffer_user(Request $request){
         $user = Auth::user();
-        Debugbar::info($user->id);
+        // Debugbar::info($user->id);
         $joboffer = Joboffer::find($request->joboffer_id);
-
+        $this->authorize('apply');
         $joboffer->users()->syncWithoutDetaching($user->id);
         return response('Success', 200);
     }
@@ -91,7 +109,7 @@ class JobofferController extends Controller
         $id = $request->get('id');
         $joboffer = Joboffer::find($id);
         $users = $joboffer->users()->get();
-
+        $this->authorize('get_candidates');
         return response()->json([
             'users' => $users
         ]);
@@ -100,7 +118,7 @@ class JobofferController extends Controller
         $id = $request->get('id');
         $user = User::find($id);
         $joboffers = $user->joboffers()->with('company')->get();
-
+        $this->authorize('candidate_joboffers');
         return response()->json([
             'joboffers' => $joboffers
         ]);
@@ -109,12 +127,13 @@ class JobofferController extends Controller
         $id = $request->get('id');
         $user = User::find($id);
         $joboffers = $user->joboffers()->with('company')->where('invited', true)->get();
-
+        $this->authorize('candidate_invites');
         return response()->json([
             'joboffers' => $joboffers
         ]);
     }
     public function toggle_invite(Request $request){
+        $this->authorize('accept');
         $joboffer = Joboffer::find($request->joboffer_id);
         $joboffer->users()->updateExistingPivot($request->user_id, 
                                                 ['invited'=>$request->invited]);

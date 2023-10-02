@@ -59,7 +59,7 @@ const getCompany = async (id) => {
           <div class="col">
             <div class="form-group">
               <label for="city">Locatie</label>
-              <input class="form-control" id="city" type="text" :value="form.city">
+              <input class="form-control" id="city" type="text" v-model="form.city">
             </div>
           </div>
         </div>

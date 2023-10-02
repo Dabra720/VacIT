@@ -28,7 +28,6 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'role'
     ];
 
     /**
@@ -50,6 +49,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    /**
+     * Get the Role associated with the user.
+     */
+    public function role(): HasOne
+    {
+        return $this->hasOne(Role::class);
+    }
 
     /**
      * Get the Company associated with the user.

@@ -1,6 +1,9 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 
 const store = useStore()
 
@@ -21,15 +24,29 @@ onMounted(() => {
 })
 
 const getJoboffer = async () => {
-  let response = await axios.get('/api/show_joboffer/'+props.id)
-  form.value = response.data.joboffer
+  // let response = await axios.get('/api/show_joboffer/'+props.id)
+  // form.value = response.data.joboffer
+  axios.get('/api/show_joboffer/'+props.id).then((response)=>{
+    form.value = response.data.joboffer
+  }).catch((err)=>{
+    if(err.response.status == 403){
+      console.log('Unauthorized, redirecting...')
+      router.push(`/joboffer/details/${props.id}`)
+    }
+  })
 }
 
 const save = () => {
   axios.post('/api/joboffer/update', form.value).then(()=>{
     alert('Vacature gewijzigd!')
-  }).catch(()=>{
-    alert('Daar ging iets fout..')
+    router.push(`/joboffer/details/${props.id}`)
+  }).catch((err)=>{
+    if(err.response.status == 403){
+      alert('U bent niet geautoriseerd voor deze actie..')
+      router.push(`/joboffer/details/${props.id}`)
+    }else{
+      alert('Daar ging iets fout..')
+    }
   })
 }
 

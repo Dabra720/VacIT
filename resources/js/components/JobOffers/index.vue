@@ -15,8 +15,8 @@ let joboffers = ref([])
 onMounted(async () => {
     if(user != null){
         console.log('user', user)
-        if(user.role == 2){
-            console.log('EMPLOYER DETECTED!', user.role)
+        if(user.role_id == 2){
+            console.log('EMPLOYER DETECTED!', user.role_id)
             getCompanyJoboffers()
         }else{
             console.log('NO EMPLOYER HERE!', user)
