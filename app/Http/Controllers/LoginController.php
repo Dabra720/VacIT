@@ -61,8 +61,9 @@ class LoginController extends Controller
             'email' =>['The provided credentials are incorrect.']
         ]);
     }
-    public function logout()
+    public function logout(Request $request)
     {
         Auth::logout();
+        $request->session()->flush();
     }
 }

@@ -8,6 +8,8 @@ use App\Models\Role;
 use App\Models\User;
 use Barryvdh\Debugbar\Facades\Debugbar;
 
+use function PHPUnit\Framework\isNull;
+
 class JobofferPolicy
 {
 
@@ -16,8 +18,13 @@ class JobofferPolicy
      */
     public function view(?User $user, Joboffer $joboffer): bool
     {
+        if(!$user){
+            return true;
+        }else{
+            return $user?->company_id == $joboffer->company_id || in_array($user?->role_id, [Role::ADMIN, Role::CANDIDATE]);
+        }
         // return true;
-        return $user->company_id == $joboffer->company_id || in_array($user->role_id, [Role::ADMIN, Role::CANDIDATE]);
+        
     }
 
     /**
@@ -25,7 +32,9 @@ class JobofferPolicy
      */
     public function create(User $user): bool
     {
-        return in_array($user->role_id,  [Role::EMPLOYER, Role::ADMIN]);
+
+        // return in_array($user->role_id,  [Role::EMPLOYER, Role::ADMIN]);
+        return true;
     }
 
     /**
@@ -47,7 +56,7 @@ class JobofferPolicy
     /**
      * Determine whether the candidate can request their joboffers.
      */
-    public function candidate_joboffers(User $user): bool
+    public function candidate(User $user): bool
     {
         return $user->role_id == Role::CANDIDATE;
     }
@@ -57,6 +66,7 @@ class JobofferPolicy
      */
     public function candidate_invites(User $user): bool
     {
+
         return $user->role_id == Role::CANDIDATE;
     }
 
@@ -79,7 +89,10 @@ class JobofferPolicy
     /**
      * Determine whether the user can get all candidates
      */
-    public function get_candidates(User $user){
-        return in_array($user->role_id,  [Role::EMPLOYER, Role::ADMIN]);
+    public function get_candidates(User $user)
+    {
+        // Debugbar::addMessage('test');
+        // return in_array($user->role_id,  [Role::EMPLOYER, Role::ADMIN]);
+        return true;
     }
 }

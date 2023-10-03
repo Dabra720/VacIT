@@ -30,7 +30,9 @@ class JobofferController extends Controller
     }
 
     public function create(Request $request){
-        $this->authorize('create', Joboffer::class);
+        Debugbar::info(Auth::user());
+        Debugbar::addMessage('user');
+        // $this->authorize('create', Joboffer::class);
 
         $request->validate([
             'title' => ['required'],
@@ -109,25 +111,26 @@ class JobofferController extends Controller
         $id = $request->get('id');
         $joboffer = Joboffer::find($id);
         $users = $joboffer->users()->get();
-        $this->authorize('get_candidates');
+        // $response = $this->authorize('get_candidates');
+        // Debugbar::info($response);
         return response()->json([
             'users' => $users
         ]);
     }
     public function get_my_joboffers(Request $request){
+        $this->authorize('candidate');
         $id = $request->get('id');
         $user = User::find($id);
         $joboffers = $user->joboffers()->with('company')->get();
-        $this->authorize('candidate_joboffers');
         return response()->json([
             'joboffers' => $joboffers
         ]);
     }
     public function get_invites(Request $request){
         $id = $request->get('id');
-        $user = User::find($id);
-        $joboffers = $user->joboffers()->with('company')->where('invited', true)->get();
-        $this->authorize('candidate_invites');
+        $userg = User::find($id);
+        $joboffers = $userg->joboffers()->with('company')->where('invited', true)->get();
+        // $this->authorize('candidate_Invites');
         return response()->json([
             'joboffers' => $joboffers
         ]);

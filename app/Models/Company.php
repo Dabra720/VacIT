@@ -28,4 +28,9 @@ class Company extends Model
     {
         return $this->hasMany(User::class);
     }
+
+    public function appointments(): HasMany
+    {
+        return $this->hasMany(Appointment::class);
+    }
 }

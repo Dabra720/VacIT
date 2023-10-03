@@ -21,6 +21,7 @@ const UserProfile = () => import('../components/Profile/Show.vue')
 const NewJoboffer = () => import('../components/JobOffers/New.vue')
 const UpdateJoboffer = () => import('../components/JobOffers/Update.vue')
 const UpdateCompany = () => import('../components/Profile/UpdateCompany.vue')
+const NewTimeslots = () => import('../components/Appointments/Create.vue')
 
 
 const publicRoutes = [
@@ -167,6 +168,17 @@ const mainRoutes = [
         meta: {
           middleware: 'auth',
           title: 'Profiel',
+        },
+      },
+      {
+        path: '/timeslots/create',
+        name: 'NewTimeslots',
+        component: NewTimeslots,
+        // props: true,
+        meta: {
+          middleware: 'auth',
+          title: 'Nieuwe afspraak',
+          askpermission: true,
         },
       },
       {

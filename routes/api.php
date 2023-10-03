@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\TimeslotController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\JobofferController;
 use Illuminate\Http\Request;
@@ -49,7 +50,7 @@ Route::get('my_invites', [JobofferController::class, 'get_invites']); // Candida
 Route::get('joboffers', [JobofferController::class, 'index']);
 Route::get('get_joboffers', [JobofferController::class, 'get_joboffers']);
 Route::get('show_joboffer/{id}', [JobofferController::class, 'show']);
-Route::get('company_joboffers/{id}', [JobofferController::class, 'get_company_joboffers']);
+// Route::get('company_joboffers/{id}', [JobofferController::class, 'get_company_joboffers']);
 Route::post('joboffer/create', [JobofferController::class, 'create']);
 Route::post('joboffer/update', [JobofferController::class, 'update']);
 
@@ -57,4 +58,9 @@ Route::post('joboffer/apply', [JobofferController::class, 'add_joboffer_user']);
 Route::post('joboffer/accept', [JobofferController::class, 'toggle_invite']); // Employer
 Route::get('joboffer/get_candidates', [JobofferController::class, 'get_all_candidates']); // Employer | Admin
 
+// CLI
 Route::post('import/employers', [UserController::class, 'import_employers']);
+
+// Appointments
+Route::post('timeslots/create', [TimeslotController::class, 'store']);
+Route::get('timeslots/company/{id}', [TimeslotController::class, 'show']);
