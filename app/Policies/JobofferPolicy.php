@@ -32,9 +32,8 @@ class JobofferPolicy
      */
     public function create(User $user): bool
     {
-
-        // return in_array($user->role_id,  [Role::EMPLOYER, Role::ADMIN]);
-        return true;
+        return in_array($user->role_id,  [Role::EMPLOYER, Role::ADMIN]);
+        // return true;
     }
 
     /**
@@ -92,7 +91,7 @@ class JobofferPolicy
     public function get_candidates(User $user)
     {
         // Debugbar::addMessage('test');
-        // return in_array($user->role_id,  [Role::EMPLOYER, Role::ADMIN]);
-        return true;
+        return in_array($user->role_id,  [Role::EMPLOYER, Role::ADMIN]);
+        // return true;
     }
 }

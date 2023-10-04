@@ -24,5 +24,7 @@ class Timeslot extends Model
         return $this->HasOne(Company::class);
     }
 
-
+    public function user():HasOne{
+        return $this->hasOne(User::class);
+    }
 }

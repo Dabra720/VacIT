@@ -64,3 +64,4 @@ Route::post('import/employers', [UserController::class, 'import_employers']);
 // Appointments
 Route::post('timeslots/create', [TimeslotController::class, 'store']);
 Route::get('timeslots/company/{id}', [TimeslotController::class, 'show']);
+Route::post('appointment/add', [TimeslotController::class, 'add_appointment']);

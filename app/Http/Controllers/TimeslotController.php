@@ -33,7 +33,7 @@ class TimeslotController extends Controller
      */
     public function show($id)
     {
-        $timeslots = Timeslot::where('company_id', 'LIKE', $id)->get();
+        $timeslots = Timeslot::where('company_id', 'LIKE', $id)->whereNull('user_id')->get();
 
         return response()->json([
             'timeslots' => $timeslots,
@@ -48,4 +48,17 @@ class TimeslotController extends Controller
         //
     }
 
+    public function add_appointment(Request $request)
+    {
+        $slot_id = $request->slot;
+        $user_id = $request->user;
+
+        $timeslot = Timeslot::find($slot_id);
+
+        $timeslot->user_id = $user_id;
+
+        $timeslot->save();
+
+        return response('Appointment added!');
+    }
 }

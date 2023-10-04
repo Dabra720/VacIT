@@ -30,6 +30,10 @@ const updateProfile = () => {
   router.push('/updateprofile')
 }
 
+const showSelect = (company_id) => {
+  router.push(`/timeslots/select/${company_id}`)
+}
+
 </script>
 <template>
   <div class="row py-5">
@@ -95,14 +99,19 @@ const updateProfile = () => {
         <div class="col"><h4>Datum</h4></div>
         <div class="col"><h4>Vacature</h4></div>
         <div class="col"><h4>Bedrijf</h4></div>
+        <div class="col"></div>
       </div>
       <div class="row" v-for="offer in invites" :key="offer.id">
         <div class="col"><p>{{offer.date}}</p></div>
         <div class="col"><p>{{offer.title}}</p></div>
         <div class="col"><p v-if="offer.company">{{offer.company.name}}</p></div>
+        <div class="col"><a class="btn btn-secondary" @click="showSelect(offer.company_id)">Selecteer een tijdslot</a></div>
       </div>
     </div>
   </div>
+  <b-modal>
+
+  </b-modal>
 </template>
 <style>
 .borange{

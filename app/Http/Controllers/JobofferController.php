@@ -102,7 +102,7 @@ class JobofferController extends Controller
         $user = Auth::user();
         // Debugbar::info($user->id);
         $joboffer = Joboffer::find($request->joboffer_id);
-        $this->authorize('apply');
+        $this->authorize('apply', Joboffer::class);
         $joboffer->users()->syncWithoutDetaching($user->id);
         return response('Success', 200);
     }
@@ -118,7 +118,7 @@ class JobofferController extends Controller
         ]);
     }
     public function get_my_joboffers(Request $request){
-        $this->authorize('candidate');
+        $this->authorize('candidate', Joboffer::class);
         $id = $request->get('id');
         $user = User::find($id);
         $joboffers = $user->joboffers()->with('company')->get();
@@ -130,13 +130,13 @@ class JobofferController extends Controller
         $id = $request->get('id');
         $userg = User::find($id);
         $joboffers = $userg->joboffers()->with('company')->where('invited', true)->get();
-        // $this->authorize('candidate_Invites');
+        $this->authorize('candidate', Joboffer::class);
         return response()->json([
             'joboffers' => $joboffers
         ]);
     }
     public function toggle_invite(Request $request){
-        $this->authorize('accept');
+        $this->authorize('accept', Joboffer::class);
         $joboffer = Joboffer::find($request->joboffer_id);
         $joboffer->users()->updateExistingPivot($request->user_id, 
                                                 ['invited'=>$request->invited]);
