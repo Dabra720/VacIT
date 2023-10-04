@@ -61,6 +61,12 @@ const logout = async () => {
                       <li class="nav-item" v-if="user.role_id == 2">
                         <router-link to="/joboffer/new" class="nav-link">Nieuwe vacature</router-link>
                       </li>
+                      <li class="nav-item" v-if="user.role_id == 2">
+                        <router-link to="/appointments/show" class="nav-link">Afspraken</router-link>
+                      </li>
+                      <li class="nav-item" v-if="user.role_id == 2">
+                        <router-link to="/timeslots/update" class="nav-link">Tijdslots</router-link>
+                      </li>
                       <li class="nav-item" >
                         <a class="nav-link" @click="logout">Log uit</a>
                       </li>

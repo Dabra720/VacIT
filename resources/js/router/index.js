@@ -23,6 +23,8 @@ const UpdateJoboffer = () => import('../components/JobOffers/Update.vue')
 const UpdateCompany = () => import('../components/Profile/UpdateCompany.vue')
 const NewTimeslots = () => import('../components/Appointments/Create.vue')
 const SelectTimeslot = () => import('../components/Appointments/Select.vue')
+const Appointments = () => import('../components/Appointments/Index.vue')
+const UpdateTimeslots = () => import('../components/Appointments/Update.vue')
 
 
 const publicRoutes = [
@@ -177,18 +179,38 @@ const mainRoutes = [
         component: NewTimeslots,
         meta: {
           middleware: 'auth',
-          title: 'Nieuwe afspraak',
+          title: 'Nieuwe tijdslots',
           askpermission: true,
         },
       },
       {
-        path: '/timeslots/select/:id',
+        path: '/timeslots/update',
+        name: 'UpdateTimeslots',
+        component: UpdateTimeslots,
+        props: true,
+        meta: {
+          middleware: 'auth',
+          title: 'Wijzig tijdslots',
+          askpermission: true,
+        },
+      },
+      {
+        path: '/timeslots/select/:id/:offer',
         name: 'SelectTimeslot',
         component: SelectTimeslot,
         props: true,
         meta: {
           middleware: 'auth',
           title: 'Maak afspraak',
+        },
+      },
+      {
+        path: '/appointments/show',
+        name: 'Appointments',
+        component: Appointments,
+        meta: {
+          middleware: 'auth',
+          title: 'Mijn afspraken',
         },
       },
       {

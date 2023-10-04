@@ -7,16 +7,17 @@ const router = useRouter()
 const store = useStore()
 const user = store.state.auth.user
 
-const props = defineProps(['id'])
+const props = defineProps(['id', 'offer'])
 
 const timeslots = ref([])
 const appointment = ref({
   slot: '',
   user: user.id,
+  offer: props.offer,
 })
 
 onMounted(async () => {
-  console.log('props', props.id)
+  console.log('props', props)
   getTimeslots()
 })
 

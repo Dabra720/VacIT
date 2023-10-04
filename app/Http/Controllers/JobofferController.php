@@ -82,7 +82,7 @@ class JobofferController extends Controller
     public function delete(Request $request)
     {
         $id = $request->get('id');
-        $joboffer = JobOffer::with('company')->find($id);
+        $joboffer = JobOffer::find($id);
         $this->authorize('delete', $joboffer);
         $joboffer->delete();
     }
@@ -128,8 +128,8 @@ class JobofferController extends Controller
     }
     public function get_invites(Request $request){
         $id = $request->get('id');
-        $userg = User::find($id);
-        $joboffers = $userg->joboffers()->with('company')->where('invited', true)->get();
+        $user = User::find($id);
+        $joboffers = $user->joboffers()->with('company')->where('invited', true)->get();
         $this->authorize('candidate', Joboffer::class);
         return response()->json([
             'joboffers' => $joboffers

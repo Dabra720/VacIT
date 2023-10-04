@@ -1,4 +1,6 @@
 <script setup>
+import { useRouter } from 'vue-router';
+const router = useRouter()
 const props = defineProps(['index', 'timeslots', 'joboffers'])
 
 const duration = [
@@ -11,6 +13,13 @@ const duration = [
   {min: 105, show: '1:45'},
   {min: 120, show: '2:00'},
 ]
+
+const destroy = (id) => {
+  axios.post(`/api/timeslots/delete?id=${id}`).then(() =>{
+    alert('tijdslot verwijderd')
+    router.push({name: 'UpdateTimeslots'})
+  })
+}
 
 </script>
 <template>
@@ -43,10 +52,13 @@ const duration = [
       </div>
       <div class="form-group">
         <label for="joboffer">Vacature</label>
-        <select class="form-control" id="joboffer" v-model="timeslots[index].joboffer">
-          <option value="" selected>Geen specifieke vacature</option>
+        <select class="form-control" id="joboffer" v-model="timeslots[index].joboffer_id">
+          <option :value="null" selected>Geen specifieke vacature</option>
           <option v-for="offer in joboffers" :value="offer.id">{{ offer.title }}</option>
         </select>
+      </div>
+      <div class="col-12 d-flex justify-content-end">
+        <button class="btn btn-danger mt-2" @click="destroy(timeslots[index].id)">Verwijder</button>
       </div>
     </div>
   </div>

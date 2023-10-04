@@ -14,6 +14,7 @@ const timeslots = ref([
     start: '',
     duration: '',
     online: '',
+    joboffer_id: '',
   }
 ])
 const joboffers = ref([])
@@ -29,6 +30,7 @@ const addSlot = () => {
     start: '',
     duration: '',
     online: '',
+    joboffer_id: '',
   }
   timeslots.value.push(slot)
 }

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Joboffer extends Model
 {
@@ -33,5 +34,10 @@ class Joboffer extends Model
     {
         return $this->belongsToMany(User::class)
                 ->wherePivot('invited', 1);
+    }
+
+    public function timeslots() : HasMany
+    {
+        return $this->hasMany(Timeslot::class);
     }
 }

@@ -30,8 +30,8 @@ const updateProfile = () => {
   router.push('/updateprofile')
 }
 
-const showSelect = (company_id) => {
-  router.push(`/timeslots/select/${company_id}`)
+const showSelect = (offer_id, company_id) => {
+  router.push(`/timeslots/select/${company_id}/${offer_id}`)
 }
 
 </script>
@@ -105,13 +105,10 @@ const showSelect = (company_id) => {
         <div class="col"><p>{{offer.date}}</p></div>
         <div class="col"><p>{{offer.title}}</p></div>
         <div class="col"><p v-if="offer.company">{{offer.company.name}}</p></div>
-        <div class="col"><a class="btn btn-secondary" @click="showSelect(offer.company_id)">Selecteer een tijdslot</a></div>
+        <div class="col"><a class="btn btn-secondary" @click="showSelect(offer.id, offer.company_id)">Selecteer een tijdslot</a></div>
       </div>
     </div>
   </div>
-  <b-modal>
-
-  </b-modal>
 </template>
 <style>
 .borange{

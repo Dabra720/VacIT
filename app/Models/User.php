@@ -79,4 +79,8 @@ class User extends Authenticatable
         return $this->belongsToMany(Joboffer::class, 'joboffer_user')->withPivot('invited');
     }
 
+    public function timeslots() : HasMany
+    {
+        return $this->hasMany(Timeslot::class);
+    }
 }
